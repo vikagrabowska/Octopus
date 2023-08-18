@@ -1,3 +1,7 @@
+//
+// Saving input values to browser memory (localStorage)
+//
+
 // For 1
 // Window
 const wght_1 =  "#wght-1";

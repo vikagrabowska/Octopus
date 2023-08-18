@@ -32,7 +32,7 @@ nav {
         li {
             cursor: pointer;
             height: fit-content;
-            padding: 10px 15px;
+            // padding: 10px 15px;
             background-color: $akcent;
             color: $font-color;
             background: $gray-05;
@@ -47,15 +47,16 @@ nav {
 
                 span {
                     @include _span;
+                    padding: 10px 15px;
+                }
+
+                input {
+                    display: none;
                 }
 
                 label {
                     @include _span;
-                    margin-right: 10px;
-                }
-
-                input {
-                    width: auto;
+                    padding: 10px 15px;
                 }
 
                 [type=file] {
@@ -75,7 +76,7 @@ nav {
 }
 
 #main-content {
-    width: calc(100vw -(20px*2));
+    width: calc(100vw - (20px*2));
     height: 100vh;
     padding: 20px $margin-vertical;
     overflow: hidden;
@@ -85,18 +86,10 @@ nav {
 
     #row-top {
         grid-auto-flow: column;
-        // grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-        // .col-top{
-        //     background-color: $akcent;
-        // }
     }
 
     #row-bot {
         grid-auto-flow: column;
-        // grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-        // .col-bot{
-        //     background-color: $akcent;
-        // }
     }
 
     .wrapper {
@@ -108,10 +101,8 @@ nav {
             display: grid;
             overflow: hidden;
             grid-template-rows: 36px 1fr;
-            // align-items: stretch;
 
             .col-property-content {
-                // border: 1px solid $font-color;
                 grid-row: 1;
 
                 ul {
@@ -170,18 +161,11 @@ nav {
             }
 
             .col-p-wrapp {
-                // display: grid;
-                // grid-row: 2;
                 grid-column: 1;
 
                 p {
                     grid-column: .8;
                     word-break: break-all;
-                    // grid-row: 2;
-                    // word-wrap: break-word;
-                    // width: 50%;
-                    // height: 100%;
-                    // background-color: $akcent;
                     padding: 0 .2em;
                     padding-top: .2em;
                     color: $font-color;
@@ -195,143 +179,280 @@ nav {
     }
 }
 
-#features-settings {    
+//
+// SETTINGS WINDOW
+//
+
+#features-settings {
+    // position: fixed;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     #close-space {
-        width: 100vw;
-        height: 100vh;
-        background-color: $gray-15;
         position: fixed;
         top: 0px;
         left: 0px;
-        cursor: pointer;
+        width: 100vw;
+        height: 100vh;
+        background-color: $gray-15;
+        z-index: 100;
     }
 
-    .popup {
-        position: absolute;
-
-        width: 50vw;
-        height: auto;
-        border-radius: 12px;
-        top: 20vh;
-        left: 25vw;
+    #features-settings-content {
+        display: block;
+        width: fit-content;
+        height: fit-content;
         background-color: $background;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1), 0px 10px 5px rgba(0, 0, 0, 0.05);
-        font-family: $app-font;
-        overflow: scroll;
-        z-index: 99999;
+        z-index: 900;
+        padding: 20px;
+        border-radius: 24px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1), 0px 5px 10px rgba(0, 0, 0, 0.05);
 
-        .popup-wrapp {
-            height: 100%;
-            padding: 0 21px;
-            position: relative;
-            top: 21px;
+        .popup {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+            grid-auto-columns: 100px;
 
-            .grid-col {
-                height: auto;
+            #waring-info-content {
+                grid-column: 1 / -1;
                 display: flex;
-                gap: 10px;
+                flex-direction: row;
+                justify-content: space-between;
 
-                .grid-col-prop {
-                    width: 200px;
-                    height: fit-content;
-                    background-color: $gray-05;
-                    border-radius: 6px;
-                    margin-bottom: 10px;
-                    border: $gray-15 solid 1px;
-                    padding: 0 21px;
+                #warring-wrapp-el {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
 
-                    .grid-inp-col-f-import {
-                        max-width: 50px;
-                        background: none;
-                        margin-bottom: none;
+                    p {
+                        @include _span-small;
+                        font-weight: 400;
+                        color: $gray-color;
+                        grid-column: 2;
                     }
+                }
 
-                    @mixin btn-settings {
-                        background: $gray-05;
-                        border: none;
-                        outline: none;
-                        padding: 4px 10px;
-                        border-radius: 4px;
-                    }
+                #resetStorage {
+                    display: block;
+                    grid-column: 3;
+                    margin-bottom: unset;
+                }
+            }
+
+            @mixin grid-col-prop {
+                border-radius: 12px;
+                padding: 10px;
+            }
+
+            @mixin btn-close {
+                background-size: 24px;
+                padding: 20px;
+                background-position: center;
+            }
+
+            @mixin btn-close-hover {
+                background-size: 24px;
+                padding: 20px;
+                background-position: center;
+                opacity: .5;
+                cursor: pointer;
+            }
+
+            .grid-col-prop {
+                border: 1px solid $gray-light-color;
+                @include grid-col-prop;
+
+                .grid-col-prop-head {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
 
                     .btn-close {
-                        margin: 10px 0;
-                        border: none;
-                        outline: none;
-                        padding: 10px 20px;
-                        background-color: rgba(0, 0, 0, 0.0);
-                        border-radius: 4px;
-                        border: 1px solid $gray-05;
-                        font-family: $app-font;
-
-                        transition-duration: .1s;
-                        transition-timing-function: ease-in-out;
+                        @include closeBtn;
+                        background: url(../assets/pict/visibility_FILL0_wght400_GRAD0_opsz48.svg) no-repeat top left;
+                        @include btn-close;
 
                         &:hover {
-                            background-color: $background;
+                            background: url(../assets/pict/visibility_off_FILL0_wght400_GRAD0_opsz48.svg) no-repeat top left;
+                            @include btn-close-hover;
                         }
                     }
 
-                    .grid-inp-col-f-settings {
-                        max-width: 50px;
-                        @include btn-settings;
+                    .inp-font-hidden {
+                        display: none;
+                    }
+                    .custom-input-font {
+                        display: inline-block;
+                        @include _span-small;
+                        padding: 8px 12px;
+                        background-color: $background;
+                        color: $font-color;
+                        border: 1px solid $gray-15;
+                        border-radius: 6px;
+                        cursor: pointer;
+                    }
+                    .custom-input-font:hover {
+                        background-color: $background;
+                    }
+                    .custom-input-font:active {
+                        background-color: $gray-15;
                     }
 
-                    .grid-inp-col-f-features {
-                        width: 90%;
-                        @include btn-settings;
+                }
+
+                ul {
+                    width: auto;
+                    height: auto;
+
+                    li {
+                        display: grid;
+                        grid-template-columns: 1fr 100px;
+                        column-gap: 10px;
+                        padding: 4px 0px;
+
+                        label{
+                            @include _span-small;
+                            padding: 4px 0px 4px 10px;
+                        }
+                        input{
+                            @include _span-small;
+                            color: $gray-color;
+                            text-decoration: none;
+                            background: none;
+                            counter-reset: none;
+                            padding: 0px 12px;
+                            
+                            &::placeholder{
+                                color: $gray-color;
+                            }
+                        }
+                        [type=text] {
+                            background: none;
+                            border: 1px solid $gray-15;
+                            border-radius: 6px;
+                            counter-reset: none;
+
+                            &:focus {
+                                border: 1px solid $background;
+                                border-width: none;
+                                box-shadow: none;
+                                outline: none;
+                                background-color: $gray-05;
+                            }
+                        }
+                        
+                    }
+
+                    .OT-features {
+                        width: auto;
+                        grid-template-columns: 1fr;
+                        grid-template-rows: auto auto;
+                        input{
+                            padding: 10px 12px;
+                        }
+                    }
+                }
+            }
+
+            .grid-col-prop-off {
+                border: 1px dashed $gray-15;
+                @include grid-col-prop;
+
+                .grid-col-prop-head {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .btn-close {
+                        @include closeBtn;
+                        background: url(../assets/pict/visibility_off_FILL0_wght400_GRAD0_opsz48.svg) no-repeat top left;
+                        @include btn-close;
+
+                        &:hover {
+                            background: url(../assets/pict/visibility_FILL0_wght400_GRAD0_opsz48.svg) no-repeat top left;
+                            @include btn-close-hover;
+                        }
+                    }
+
+                    .inp-font-hidden {
+                        display: none;
+                    }
+                    .custom-input-font {
+                        display: inline-block;
+                        @include _span-small;
+                        padding: 8px 12px;
+
+                        pointer-events: none;
+                        user-select: none;
+                        
+                        color: $gray-color;
+                        border: 1px dashed $gray-15;
+                        border-radius: 12px;
                     }
                 }
 
                 ul {
+                    pointer-events: none;
+                    user-select: none;
+                    opacity: .5;
+
                     li {
-                        margin-bottom: 10px;
+                        display: grid;
+                        grid-template-columns: 1fr 100px;
+                        column-gap: 10px;
+                        padding: 4px 0px 4px 10px;
+
+                        label{
+                            @include _span-small;
+                            
+                            padding: 4px 0px;
+                        }
+                        input{
+                            @include _span-small;
+                            color: $gray-color;
+                            text-decoration: none;
+                            background: none;
+                            counter-reset: none;
+                            padding: 0px;
+                            
+                            &::placeholder{
+                                color: $gray-color;
+                            }
+                        }
+                        [type=text] {
+                            background: none;
+                            border: 1px solid $background;
+                            border-radius: 6px;
+                            counter-reset: none;
+
+                            &:focus {
+                                border: 1px solid $background;
+                                border-width: none;
+                                box-shadow: none;
+                                outline: none;
+                            }
+                        }
                     }
+
+                    .OT-features {
+                        width: auto;
+                        grid-template-columns: 1fr;
+                        grid-template-rows: auto auto;
+                        input{
+                            padding: 10px 2px;
+                        }
+                    }
+
                 }
             }
+
         }
     }
-}
-
-.gcp-top,
-.gcp-bot {
-    width: auto;
-    height: 100%;
-    padding: 5px;
-    color: $font-color;
-    background-color: $gray-15;
-    border-radius: 6px;
-    cursor: pointer;
-    text-align: center;
-    justify-content: center;
-}
-
-// .gcp-1, .gcp-2, .gcp-3, .gcp-4, .gcp-5, .gcp-6{
-//     opacity: 1;
-// }
-.border-bottom-span {
-    margin-bottom: none;
-}
-
-.f-imp-define {
-    font-size: 12px;
-    font-family: $app-font;
-
-}
-
-
-.close-grid-col-prop {
-    width: 28px;
-    height: 28px;
-    padding-top: 5px;
-    color: $font-color;
-    position: relative;
-    left: -21px;
-
-    // background-color: $akcent;
-    cursor: pointer;
-    text-align: center;
-    justify-content: center;
 }
 
 //
@@ -427,28 +548,47 @@ nav {
 
 // RESET BUTTON
 #resetStorage {
-    width: 100px;
+    width: fit-content;
     height: auto;
     padding: 10px 21px;
-    margin-bottom: 10px;
     background-color: $gray-15;
     background: none;
     border: 1px solid $gray-15;
     border-radius: 18px;
+    
+    @include _span-small;
+    transition: ease-in-out .2s;
+    color: $font-color;
 
     &:hover {
-        background-color: $gray-15;
+        background-color: $gray-05;
     }
 
     &:active {
-        background-color: $font-color;
-        color: $background;
+        background-color: $gray-15;
+        color: $font-color;
     }
 }
 
-.toggle-bottom,
-.toggle-top {
-    &::after {
-        content: "close";
-    }
+// BTN's
+.warring-pict {
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    background: url(../assets/pict/warning_FILL0_wght400_GRAD0_opsz48.svg) no-repeat top left;
+    background-size: contain;
+}
+.info-pict{
+    width: 14px;
+    height: 14px;
+    display:inline-block;
+    position: relative;
+    top:2px;
+    background: url(../assets/pict/help_FILL0_wght500_GRAD200_opsz48.svg) no-repeat top left;
+    background-size: contain;
+}
+
+#logo-Octopus{
+    height: 36px;
 }

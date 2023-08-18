@@ -1,4 +1,4 @@
-// Funkcja HardWrap
+// HardWrap Function
 // 1
 // import Storage
 if(localStorage.getItem("HW_1") == null) {
@@ -45,7 +45,7 @@ function editHW_1() {
             }
         }
     }
-    editHW_1() // wywołanie funkcji HardWrap
+    editHW_1() // calling the HardWrap function
 // 2
 // import Storage
 if(localStorage.getItem("HW_2") == null) {
@@ -56,7 +56,7 @@ else{
     const fHW_2 = document.querySelector("#hard-wrap-input-2");
     fHW_2.value = localStorage.getItem("HW_2");
 }
-// Funkcja HardWrap
+// HardWrap Function
 function editHW_2() {
         var n = document.querySelector("#hard-wrap-input-2").value
         localStorage.setItem("HW_2", n);//
@@ -92,9 +92,9 @@ function editHW_2() {
             }
         }
     }
-    editHW_2() // wywołanie funkcji HardWrap
+    editHW_2() // calling the HardWrap function
 // 3
-// Funkcja HardWrap
+// HardWrap Function
 // import Storage
 if(localStorage.getItem("HW_3") == null) {
     const fHW_3 = document.querySelector("#hard-wrap-input-3");
@@ -139,7 +139,7 @@ function editHW_3() {
             }
         }
     }
-    editHW_3() // wywołanie funkcji HardWrap
+    editHW_3() // calling the HardWrap function
 // 4
 // import Storage
 if(localStorage.getItem("HW_4") == null) {
@@ -150,7 +150,7 @@ else{
     const fHW_4 = document.querySelector("#hard-wrap-input-4");
     fHW_4.value = localStorage.getItem("HW_4");
 }
-    // Funkcja HardWrap
+// HardWrap Function
 function editHW_4() {
         var n = document.querySelector("#hard-wrap-input-4").value
         localStorage.setItem("HW_4", n);//
@@ -186,7 +186,7 @@ function editHW_4() {
             }
         }
     }
-    editHW_4() // wywołanie funkcji HardWrap
+    editHW_4() // calling the HardWrap function
 // 5
 // import Storage
 if(localStorage.getItem("HW_5") == null) {
@@ -197,7 +197,7 @@ else{
     const fHW_5 = document.querySelector("#hard-wrap-input-5");
     fHW_5.value = localStorage.getItem("HW_5");
 }
-// Funkcja HardWrap
+// HardWrap Function
 function editHW_5() {
         var n = document.querySelector("#hard-wrap-input-5").value
         localStorage.setItem("HW_5", n);//
@@ -233,7 +233,7 @@ function editHW_5() {
             }
         }
     }
-    editHW_5() // wywołanie funkcji HardWrap
+    editHW_5() // calling the HardWrap function
 // 6
 // import Storage
 if(localStorage.getItem("HW_6") == null) {
@@ -244,7 +244,7 @@ else{
     const fHW_6 = document.querySelector("#hard-wrap-input-6");
     fHW_6.value = localStorage.getItem("HW_6");
 }
-    // Funkcja HardWrap
+// HardWrap Function
 function editHW_6() {
         var n = document.querySelector("#hard-wrap-input-6").value
         localStorage.setItem("HW_6", n);//
@@ -280,4 +280,4 @@ function editHW_6() {
             }
         }
     }
-    editHW_6() // wywołanie funkcji HardWrap
+    editHW_6() // calling the HardWrap function

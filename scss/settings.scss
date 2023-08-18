@@ -1,12 +1,14 @@
 //Color
 $background: rgb(253, 252, 252);
 $akcent:rgb(69, 18, 235);
-$font-color: rgb(45, 40, 53);
+$font-color: rgb(46, 41, 54);
+$gray-color: rgb(118, 114, 125);
+$gray-light-color: rgb(171, 168, 178);
 
 $gray-05: rgba(0, 0, 0, 0.05);
 $gray-15: rgba(0, 0, 0, 0.15);
 
-$white-14: rgba(255, 255, 255, 0.14);
+$white-14: rgba(255, 255, 255, 0.15);
 
 //Formt
 $nav-height: 64px;
@@ -39,6 +41,11 @@ $app-font: 'IBM Plex Sans', sans-serif;
     font-weight: 500;
     font-size: 18px;
 }
+@mixin _span-small {
+    font-family: $app-font;
+    font-weight: 500;
+    font-size: 14px;
+}
 @mixin _paragraph {
     font-family: $app-font;
     font-weight: 400;
@@ -55,3 +62,15 @@ h2{
 // p{
 //     @include _paragraph;
 // }
+
+//
+// Button
+//
+@mixin closeBtn {
+    display: block;
+    width: 24px;
+    height: 24px;
+    border: none;
+    counter-reset: none;
+    transition: ease-in-out .15s;
+}

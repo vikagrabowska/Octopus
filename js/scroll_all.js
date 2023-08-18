@@ -1,3 +1,8 @@
+//
+// This is a function that enables scrolling of all columns simultaneously,
+// relative to scrolling in a single text column
+//
+
 var p_1 = document.querySelector('.col-scrl-1')
 var p_2 = document.querySelector('.col-scrl-2')
 var p_3 = document.querySelector('.col-scrl-3')
