@@ -1,0 +1,867 @@
+<!-- App V.0.95 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Octopus V.0.95</title>
+    <!-- Meta -->
+    <meta name="author" content="Viktoriya Grabowska & Szymon Marciniak">
+    <meta name="designer" content="Viktoriya Grabowska & Szymon Marciniak">
+    <meta name="description" content="">
+    <meta name="abstract" content="">
+    <meta name="keywords" content="VariableFont">
+    <!-- <meta name="theme-color" content="#fdfcfc"> -->
+    <!-- <meta name="theme-color" content="#000"> -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1ecec" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e2936" />
+    <!-- <meta name="msapplication-TileColor" content="#000"> -->
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon/Octopus.icns" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/Octopus.icns">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/Octopus-favicon_32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/Octopus-favicon_16x16.png">
+    <link rel="mask-icon" href="assets/favicon/Octopus.svg" color="#eb4526">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="min-css/style.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;300;400;500;600;700&family=Lexend+Deca:wght@808&family=Roboto&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+
+    <style>
+        #Version::before {
+            content: "V.0.95 | BETA";
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-weight: 100;
+            position: absolute;
+            right: 21px;
+            top: 21px
+        }
+
+        img {
+            pointer-events: none;
+            margin-right: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <nav>
+        <img src="./assets/favicon/OctopusLogo.svg" id="logo-Octopus" alt="Octopus">
+        <ul>
+            <li onselectstart="return false;" onclick="openPanel()">
+                <div id="btn-nav">
+                    <span>Features</span>
+                </div>
+            </li>
+            <li onselectstart="return false;">
+                <div id="btn-nav" id="inputfile">
+                    <input type="file" name="inputfile" id="inputfile" class="btn-nav" accept=".txt">
+                    <label for="inputfile">Text file</label>
+                </div>
+            </li>
+        </ul>
+        <span id="Version"></span>
+    </nav>
+    <!-- CONTENT -->
+    <div id="main-content">
+        <div id="row-top" class="wrap-col-top wrapper">
+            <div id="top-column1" class="col col-1 col-top">
+                <!-- Head -->
+                <div class="col-property-content" onselectstart="return false;">
+                    <form id="form-1">
+                        <ul>
+                            <h2>1</h2>
+                            <li>
+                                <label for="col-prop-1">wght</label>
+                                <input type="text" pattern="[0-9]{4}" name="col-prop-1" id="wght-1"
+                                    class="filter-numeric-4" onchange="VFwght_1()">
+                            </li>
+                            <li>
+                                <label for="col-prop-1">wdth</label>
+                                <input type="text" pattern="[0-9]{4}" name="col-prop-1" id="wdth-1"
+                                    class="filter-numeric-4" onchange="VFwdth_1()">
+                            </li>
+                            <li>
+                                <label for="col-prop-1">opsz</label>
+                                <input type="text" pattern="[0-9]{4}" name="col-prop-1" id="opsz-1"
+                                    class="filter-numeric-4" onchange="VFopsz_1()">
+                            </li>
+                            <li>
+                                <label for="">Hard-Wrap</label>
+                                <input type="text" pattern="[0-9]{4}" name="hardWrap" id="hard-wrap-input-1"
+                                    class="filter-numeric-3" onchange="editHW_1()">
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <!-- Paragraph -->
+                <div class="col-p-wrapp col-scrl-1">
+                    <p id="p-t1" spellcheck="false" contenteditable onchange="edit()"></p> <!-- P -->
+                </div>
+            </div><!-- $ -->
+            <div id="top-column2" class="col col-2 col-top">
+                <!-- Head -->
+                <div class="col-property-content" onselectstart="return false;">
+                    <form id="form-2">
+                        <ul>
+                            <h2>2</h2>
+                            <li>
+                                <label for="col-prop-2">wght</label>
+                                <input type="text" name="col-prop-2" id="wght-2" class="filter-numeric-4"
+                                    onchange="VFwght_2()">
+                            </li>
+                            <li>
+                                <label for="col-prop-2">wdth</label>
+                                <input type="text" name="col-prop-2" id="wdth-2" class="filter-numeric-4"
+                                    onchange="VFwdth_2()">
+                            </li>
+                            <li>
+                                <label for="col-prop-2">opsz</label>
+                                <input type="text" name="col-prop-2" id="opsz-2" class="filter-numeric-4"
+                                    onchange="VFopsz_2()">
+                            </li>
+                            <li>
+                                <label for="">Hard-Wrap</label>
+                                <input type="text" name="hardWrap" id="hard-wrap-input-2" class="filter-numeric-3"
+                                    onchange="editHW_2()">
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <!-- & -->
+                <div class="col-p-wrapp col-scrl-2">
+                    <p id="p-t2" spellcheck="false" contenteditable></p> <!-- P -->
+                </div>
+            </div><!-- $ -->
+            <div id="top-column3" class="col col-3 col-top">
+                <!-- Head -->
+                <div class="col-property-content" onselectstart="return false;">
+                    <form id="form-3">
+                        <ul>
+                            <h2>3</h2>
+                            <li>
+                                <label for="col-prop-3">wght</label>
+                                <input type="text" name="col-prop-3" id="wght-3" class="filter-numeric-4"
+                                    onchange="VFwght_3()">
+                            </li>
+                            <li>
+                                <label for="col-prop-3">wdth</label>
+                                <input type="text" name="col-prop-3" id="wdth-3" class="filter-numeric-4"
+                                    onchange="VFwdth_3()">
+                            </li>
+                            <li>
+                                <label for="col-prop-3">opsz</label>
+                                <input type="text" name="col-prop-3" id="opsz-3" class="filter-numeric-4"
+                                    onchange="VFopsz_3()">
+                            </li>
+                            <li>
+                                <label for="">Hard-Wrap</label>
+                                <input type="text" name="hardWrap" id="hard-wrap-input-3" class="filter-numeric-3"
+                                    onchange="editHW_3()">
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <!-- & -->
+                <div class="col-p-wrapp col-scrl-3">
+                    <p id="p-t3" spellcheck="false" contenteditable></p> <!-- P -->
+                </div>
+            </div><!-- $ -->
+        </div>
+        <!-- BOTTOM -->
+        <div id="row-bot" class="wrap-col-bot wrapper">
+            <div id="bottom-column4" class="col col-4 col-bot">
+                <!-- Head -->
+                <div class="col-property-content" onselectstart="return false;">
+                    <form id="form-4">
+                        <ul>
+                            <h2>4</h1>
+                                <li>
+                                    <label for="col-prop-4">wght</label>
+                                    <input type="text" name="col-prop-4" id="wght-4" class="filter-numeric-4"
+                                        onchange="VFwght_4()">
+                                </li>
+                                <li>
+                                    <label for="col-prop-4">wdth</label>
+                                    <input type="text" name="col-prop-4" id="wdth-4" class="filter-numeric-4"
+                                        onchange="VFwdth_4()">
+                                </li>
+                                <li>
+                                    <label for="col-prop-4">opsz</label>
+                                    <input type="text" name="col-prop-4" id="opsz-4" class="filter-numeric-4"
+                                        onchange="VFopsz_4()">
+                                </li>
+                                <li>
+                                    <label for="">Hard-Wrap</label>
+                                    <input type="text" name="hardWrap" id="hard-wrap-input-4" class="filter-numeric-3"
+                                        onchange="editHW_4()">
+                                </li>
+                        </ul>
+                    </form>
+                </div>
+                <!-- & -->
+                <div class="col-p-wrapp col-scrl-4">
+                    <p id="p-t4" spellcheck="false" contenteditable></p> <!-- P -->
+                </div>
+            </div><!-- $ -->
+            <div id="bottom-column5" class="col col-5 col-bot">
+                <!-- Head -->
+                <div class="col-property-content" onselectstart="return false;">
+                    <form id="form-5">
+                        <ul>
+                            <h2>5</h1>
+                                <li>
+                                    <label for="col-prop-5">wght</label>
+                                    <input type="text" name="col-prop-5" id="wght-5" class="filter-numeric-4"
+                                        onchange="VFwght_5()">
+                                </li>
+                                <li>
+                                    <label for="col-prop-5">wdth</label>
+                                    <input type="text" name="col-prop-5" id="wdth-5" class="filter-numeric-4"
+                                        onchange="VFwdth_5()">
+                                </li>
+                                <li>
+                                    <label for="col-prop-5">opsz</label>
+                                    <input type="text" name="col-prop-5" id="opsz-5" class="filter-numeric-4"
+                                        onchange="VFopsz_5()">
+                                </li>
+                                <li>
+                                    <label for="">Hard-Wrap</label>
+                                    <input type="text" name="hardWrap" id="hard-wrap-input-5" class="filter-numeric-3"
+                                        onchange="editHW_5()">
+                                </li>
+                        </ul>
+                    </form>
+                </div>
+                <!-- & -->
+                <div class="col-p-wrapp col-scrl-5">
+                    <p id="p-t5" spellcheck="false" contenteditable></p> <!-- P -->
+                </div>
+            </div><!-- $ -->
+            <div id="bottom-column6" class="col col-6 col-bot">
+                <!-- Head -->
+                <div class="col-property-content" onselectstart="return false;">
+                    <form id="form-6">
+                        <ul>
+                            <h2>6</h1>
+                                <li>
+                                    <label for="col-prop-6">wght</label>
+                                    <input type="text" name="col-prop-6" id="wght-6" class="filter-numeric-4"
+                                        onchange="VFwght_6()">
+                                </li>
+                                <li>
+                                    <label for="col-prop-6">wdth</label>
+                                    <input type="text" name="col-prop-6" id="wdth-6" class="filter-numeric-4"
+                                        onchange="VFwdth_6()">
+                                </li>
+                                <li>
+                                    <label for="col-prop-6">opsz</label>
+                                    <input type="text" name="col-prop-6" id="opsz-6" class="filter-numeric-4"
+                                        onchange="VFopsz_6()">
+                                </li>
+                                <li>
+                                    <label for="">Hard-Wrap</label>
+                                    <input type="text" name="hardWrap" id="hard-wrap-input-6" class="filter-numeric-3"
+                                        onchange="editHW_6()">
+                                </li>
+                        </ul>
+                    </form>
+                </div>
+                <div class="col-p-wrapp col-scrl-6">
+                    <p id="p-t6" spellcheck="false" contenteditable></p> <!-- P -->
+                </div>
+            </div><!-- $ -->
+        </div>
+    </div>
+    <!-- / -->
+
+    <!-- Windows -->
+    <!-- Features-->
+    <div id="features-settings" style="display: none;">
+        <div id="close-space" onclick="closePanel()"></div><!--$-->
+        <div id="features-settings-content">
+            <div class="popup">
+                <!-- Body -->
+                <div id="waring-info-content">
+                    <div id="warring-wrapp-el">
+                        <span class="warring-pict"></span>
+                        <p>Font files are only loaded from the "./font" folder within the program directory.<br> Ensure
+                            all necessary fonts are placed in this folder for proper loading and usage.</p>
+                    </div>
+
+                    <input id="resetStorage" type="button" value="Clear data" onclick="resetSorageData()"></input>
+                </div>
+
+                <div id="gcp-1" class="grid-col-prop gcp-1">
+                    <div class="grid-col-prop-head">
+                        <button id="toggle-top" class="btn-close"
+                            onclick="toggleColumn('top', 'top-column1', 'container-list-1', 'gcp-1')"></button>
+
+                        <div class="custom-input-font-container">
+                            <input type="file" name="_font" id="importFont_1"
+                                class="inp-font-hidden grid-inp-col-f-import" accept=".ttf, .otf, .woff, .woff2">
+                            <label class="custom-input-font" for="importFont_1">Font</label>
+                        </div>
+                    </div>
+
+                    <ul id="container-list-1">
+                        <li>
+                            <label for="FONT_SIZE">Font size</label>
+                            <input id="inp-f-size-1" class="grid-inp-col-f-settings" type="text" name="FONT_SIZE"
+                                onchange="textSize_1()">
+                        </li>
+                        <!-- ADD NEW -->
+                        <li>
+                            <label for="TRACKING">Tracking</label>
+                            <input id="inp-f-tracking-1" class="grid-inp-col-f-settings" type="text" name="TRACKING"
+                                onchange="tracking_1()">
+                        </li>
+                        <li>
+                            <label for="LINE_HEIGHT">Line Height</label>
+                            <input id="inp-f-lineHeight-1" class="grid-inp-col-f-settings" type="text"
+                                name="LINE_HEIGHT" onchange="lineHeight_1()">
+                        </li>
+                        <li>
+                            <label for="LOCL">.locl <a class="info-pict"
+                                    href="https://www.w3schools.com/tags/ref_country_codes.asp"
+                                    target="_blank"></a></label>
+                            <input type="text" name="LOCL" id="f-locl-1" class="grid-inp-col-f-settings"
+                                onchange="locl_1()" placeholder="ISO code">
+
+                        </li>
+                        <li class="OT-features">
+                            <label for="FEATURES">Features</label>
+                            <input type="text" name="FEATURES" id="f-features-1" class="grid-inp-col-f-features"
+                                onchange="features_1()" placeholder='e.g. "ss01", "calt"'>
+                        </li>
+                        <!-- $ ADD NEW -->
+                    </ul>
+                </div>
+                <!-- $ -->
+                <div id="gcp-2" class="grid-col-prop gcp-2">
+                    <div class="grid-col-prop-head">
+                        <button id="toggle-top" class="btn-close"
+                            onclick="toggleColumn('top', 'top-column2', 'container-list-2', 'gcp-2')"></button>
+
+                        <div class="custom-input-font-container">
+                            <input type="file" name="_font" id="importFont_2"
+                                class="inp-font-hidden grid-inp-col-f-import" accept=".ttf, .otf, .woff, .woff2">
+                            <label class="custom-input-font" for="importFont_2">Font</label>
+                        </div>
+                    </div>
+
+                    <ul id="container-list-2">
+                        <li>
+                            <label for="FONT_SIZE">Font size</label>
+                            <input id="inp-f-size-2" class="grid-inp-col-f-settings" type="text" name="FONT_SIZE"
+                                onchange="textSize_2()">
+                        </li>
+                        <!-- ADD NEW -->
+                        <li>
+                            <label for="TRACKING">Tracking</label>
+                            <input id="inp-f-tracking-2" class="grid-inp-col-f-settings" type="text" name="TRACKING"
+                                onchange="tracking_2()">
+                        </li>
+                        <li>
+                            <label for="LINE_HEIGHT">Line Height</label>
+                            <input id="inp-f-lineHeight-2" class="grid-inp-col-f-settings" type="text"
+                                name="LINE_HEIGHT" onchange="lineHeight_2()">
+                        </li>
+                        <li>
+                            <label for="LOCL">.locl <a class="info-pict"
+                                    href="https://www.w3schools.com/tags/ref_country_codes.asp"
+                                    target="_blank"></a></label>
+                            <input type="text" name="LOCL" id="f-locl-2" class="grid-inp-col-f-settings"
+                                onchange="locl_2()" placeholder="ISO code">
+                        </li>
+                        <li class="OT-features">
+                            <label for="FEATURES">Features</label>
+                            <input type="text" name="FEATURES" id="f-features-2" class="grid-inp-col-f-features"
+                                onchange="features_2()" placeholder='e.g. "ss01", "calt"'>
+                        </li>
+                        <!-- $ ADD NEW -->
+                    </ul>
+
+                </div>
+
+                <div id="gcp-3" class="grid-col-prop gcp-3">
+                    <div class="grid-col-prop-head">
+                        <button id="toggle-top" class="btn-close"
+                            onclick="toggleColumn('top', 'top-column3', 'container-list-3', 'gcp-3')"></button>
+                        <div class="custom-input-font-container">
+                            <input type="file" name="_font" id="importFont_3"
+                                class="inp-font-hidden grid-inp-col-f-import" accept=".ttf, .otf, .woff, .woff2">
+                            <label class="custom-input-font" for="importFont_3">Font</label>
+                        </div>
+                    </div>
+                    <ul id="container-list-3">
+                        <li>
+                            <label for="FONT_SIZE">Font size</label>
+                            <input id="inp-f-size-3" class="grid-inp-col-f-settings" type="text" name="FONT_SIZE"
+                                onchange="textSize_3()">
+                        </li>
+                        <!-- ADD NEW -->
+                        <li>
+                            <label for="TRACKING">Tracking</label>
+                            <input id="inp-f-tracking-3" class="grid-inp-col-f-settings" type="text" name="TRACKING"
+                                onchange="tracking_3()">
+                        </li>
+                        <li>
+                            <label for="LINE_HEIGHT">Line Height</label>
+                            <input id="inp-f-lineHeight-3" class="grid-inp-col-f-settings" type="text"
+                                name="LINE_HEIGHT" onchange="lineHeight_3()">
+                        </li>
+                        <li>
+                            <label for="LOCL">.locl <a class="info-pict"
+                                    href="https://www.w3schools.com/tags/ref_country_codes.asp"
+                                    target="_blank"></a></label>
+                            <input type="text" name="LOCL" id="f-locl-3" class="grid-inp-col-f-settings"
+                                onchange="locl_3()" placeholder="ISO code">
+                        </li>
+                        <li class="OT-features">
+                            <label for="FEATURES">Features</label>
+                            <input type="text" name="FEATURES" id="f-features-3" class="grid-inp-col-f-features"
+                                onchange="features_3()" placeholder='e.g. "ss01", "calt"'>
+                        </li>
+                        <!-- $ ADD NEW -->
+                    </ul>
+                </div>
+
+                <div id="gcp-4" class="grid-col-prop gcp-4">
+                    <div class="grid-col-prop-head">
+                        <button id="toggle-bottom" class="btn-close"
+                            onclick="toggleColumn('bottom', 'bottom-column4', 'container-list-4', 'gcp-4')"></button>
+                        <div class="custom-input-font-container">
+                            <input type="file" name="_font" id="importFont_4"
+                                class="inp-font-hidden grid-inp-col-f-import" accept=".ttf, .otf, .woff, .woff2">
+                            <label class="custom-input-font" for="importFont_4">Font</label>
+                        </div>
+                    </div>
+
+                    <ul id="container-list-4">
+                        <li>
+                            <label for="FONT_SIZE">Font size</label>
+                            <input id="inp-f-size-4" class="grid-inp-col-f-settings" type="text" name="FONT_SIZE"
+                                onchange="textSize_4()">
+                        </li>
+                        <!-- ADD NEW -->
+                        <li>
+                            <label for="TRACKING">Tracking</label>
+                            <input id="inp-f-tracking-4" class="grid-inp-col-f-settings" type="text" name="TRACKING"
+                                onchange="tracking_4()">
+                        </li>
+                        <li>
+                            <label for="LINE_HEIGHT">Line Height</label>
+                            <input id="inp-f-lineHeight-4" class="grid-inp-col-f-settings" type="text"
+                                name="LINE_HEIGHT" onchange="lineHeight_4()">
+                        </li>
+                        <li>
+                            <label for="LOCL">.locl <a class="info-pict"
+                                    href="https://www.w3schools.com/tags/ref_country_codes.asp"
+                                    target="_blank"></a></label>
+                            <input type="text" name="LOCL" id="f-locl-4" class="grid-inp-col-f-settings"
+                                onchange="locl_4()" placeholder="ISO code">
+                        </li>
+                        <li class="OT-features">
+                            <label for="FEATURES">Features</label>
+                            <input type="text" name="FEATURES" id="f-features-4" class="grid-inp-col-f-features"
+                                onchange="features_4()" placeholder='e.g. "ss01", "calt"'>
+                        </li>
+                        <!-- $ ADD NEW -->
+                    </ul>
+                </div>
+
+                <div id="gcp-5" class="grid-col-prop gcp-5">
+
+                    <div class="grid-col-prop-head">
+                        <button id="toggle-bottom" class="btn-close"
+                            onclick="toggleColumn('bottom', 'bottom-column5', 'container-list-5', 'gcp-5')"></button>
+                        <div class="custom-input-font-container">
+                            <input type="file" name="_font" id="importFont_5"
+                                class="inp-font-hidden grid-inp-col-f-import" accept=".ttf, .otf, .woff, .woff2">
+                            <label class="custom-input-font" for="importFont_5">Font</label>
+                        </div>
+                    </div>
+
+
+                    <ul id="container-list-5">
+                        <li>
+                            <label for="FONT_SIZE">Font size</label>
+                            <input id="inp-f-size-5" class="grid-inp-col-f-settings" type="text" name="FONT_SIZE"
+                                onchange="textSize_5()">
+                        </li>
+                        <!-- ADD NEW -->
+                        <li>
+                            <label for="TRACKING">Tracking</label>
+                            <input id="inp-f-tracking-5" class="grid-inp-col-f-settings" type="text" name="TRACKING"
+                                onchange="tracking_5()">
+                        </li>
+                        <li>
+                            <label for="LINE_HEIGHT">Line Height</label>
+                            <input id="inp-f-lineHeight-5" class="grid-inp-col-f-settings" type="text"
+                                name="LINE_HEIGHT" onchange="lineHeight_5()">
+                        </li>
+                        <li>
+                            <label for="LOCL">.locl <a class="info-pict"
+                                    href="https://www.w3schools.com/tags/ref_country_codes.asp"
+                                    target="_blank"></a></label>
+                            <input type="text" name="LOCL" id="f-locl-5" class="grid-inp-col-f-settings"
+                                onchange="locl_5()" placeholder="ISO code">
+                        </li>
+                        <li class="OT-features">
+                            <label for="FEATURES">Features</label>
+                            <input type="text" name="FEATURES" id="f-features-5" class="grid-inp-col-f-features"
+                                onchange="features_5()" placeholder='e.g. "ss01", "calt"'>
+                        </li>
+                        <!-- $ ADD NEW -->
+                    </ul>
+                </div>
+
+                <div id="gcp-6" class="grid-col-prop gcp-6">
+                    <div class="grid-col-prop-head">
+                        <button id="toggle-bottom" class="btn-close"
+                            onclick="toggleColumn('bottom', 'bottom-column6', 'container-list-6', 'gcp-6')"></button>
+                        <div class="custom-input-font-container">
+                            <input type="file" name="_font" id="importFont_6"
+                                class="inp-font-hidden grid-inp-col-f-import" accept=".ttf, .otf, .woff, .woff2">
+                            <label class="custom-input-font" for="importFont_6">Font</label>
+                        </div>
+                    </div>
+                    <ul id="container-list-6">
+                        <li>
+                            <label for="FONT_SIZE">Font size</label>
+                            <input id="inp-f-size-6" class="grid-inp-col-f-settings" type="text" name="FONT_SIZE"
+                                onchange="textSize_6()">
+                        </li>
+                        <!-- ADD NEW -->
+                        <li>
+                            <label for="TRACKING">Tracking</label>
+                            <input id="inp-f-tracking-6" class="grid-inp-col-f-settings" type="text" name="TRACKING"
+                                onchange="tracking_6()">
+                        </li>
+                        <li>
+                            <label for="LINE_HEIGHT">Line Height</label>
+                            <input id="inp-f-lineHeight-6" class="grid-inp-col-f-settings" type="text"
+                                name="LINE_HEIGHT" onchange="lineHeight_6()">
+                        </li>
+                        <li>
+                            <label for="LOCL">.locl <a class="info-pict"
+                                    href="https://www.w3schools.com/tags/ref_country_codes.asp"
+                                    target="_blank"></a></label>
+                            <input type="text" name="LOCL" id="f-locl-6" class="grid-inp-col-f-settings"
+                                onchange="locl_6()" placeholder="ISO code">
+                        </li>
+                        <li class="OT-features">
+                            <label for="FEATURES">Features</label>
+                            <input type="text" name="FEATURES" id="f-features-6" class="grid-inp-col-f-features"
+                                onchange="features_6()" placeholder='e.g. "ss01", "calt"'>
+                        </li>
+                        <!-- $ ADD NEW -->
+                    </ul>
+                </div>
+
+            </div>
+        </div><!--$-->
+    </div>
+
+    <!-- HELLO WINDOW -->
+    <div id="hello-octopus" onclick="close_HelloPop()">
+        <div id="wrapp_popup">
+            <!-- For first users -->
+            <!-- This popup showing new features in subsequent versions of the program -->
+            <img src="./assets/V95/Octopus_popup.png" alt="Octopus95" srcset="">
+        </div>
+    </div>
+
+    <!-- ////// -->
+    <!-- SKRYPTY-->
+    <!-- ////// -->
+
+    <!-- Hello Octopus Window -->
+    <script type="text/javascript">
+
+        if (localStorage.getItem("FirstOpen") == null) {
+            function close_HelloPop() {
+                const key_HelloPop = "V95";
+                document.querySelector('#hello-octopus').style.display = "none";
+                localStorage.setItem("FirstOpen", key_HelloPop);
+            }
+
+        }
+        if (localStorage.getItem("FirstOpen") !== "V95") {
+            localStorage.clear("FirstOpen");
+        }
+        else {
+
+            document.querySelector('#hello-octopus').style.display = "none";
+        }
+
+    </script>
+
+    <!-- Limiting input to digits and to a certain number of digits -->
+    <script>
+
+        // This JavaScript code snippet selects numeric input elements based on their class names, sets up event listeners to filter and limit input values, and allows users to select all content with Ctrl (or Command) + 'a'. The filterAndLimit function takes an input value and a maximum length, and it removes non-digit characters while ensuring the length does not exceed the specified maximum.
+
+
+        // Select all input elements with class names starting with "filter-numeric"
+        const numericInputs = document.querySelectorAll("[class^='filter-numeric']");
+
+        // Iterate over each numeric input element
+        numericInputs.forEach((input) => {
+            // Extract the maximum length value from the class name
+            const maxLength = parseInt(input.classList[0].split('-').pop(), 10);
+
+            // Attach an "input" event listener to the input element
+            input.addEventListener("input", function (event) {
+                // Filter and limit the input value based on the maximum length
+                event.target.value = filterAndLimit(event.target.value, maxLength);
+            });
+
+            // Attach a "keydown" event listener to the input element
+            input.addEventListener("keydown", function (event) {
+                // Check if the user presses Ctrl (or Command on Mac) + 'a' key combination
+                if ((event.ctrlKey || event.metaKey) && event.key === 'a') {
+                    event.preventDefault(); // Prevent the default selection behavior
+                    input.select(); // Select the entire input content
+                }
+            });
+        });
+
+        // Function to filter and limit the input value
+        function filterAndLimit(inputValue, maxLength) {
+            // Remove all non-digit characters using a regular expression, and limit the length
+            const validValue = inputValue.replace(/\D/g, '').slice(0, maxLength);
+            return validValue; // Return the filtered and limited value
+        }
+
+    </script>
+
+    <!-- Window -->
+    <script type="text/javascript">
+        // Octopus Popup
+        function closePanel() {
+            document.querySelector('#features-settings').style.display = "none";
+        }
+        function openPanel() {
+            document.querySelector('#features-settings').style.display = "flex";
+        }
+    </script>
+
+    <!-- Reset Storage -->
+    <script type="text/javascript">
+        var listStorage = [
+            "FirstOpen",
+            "txt",
+            "font_1", "font_2", "font_3", "font_4", "font_5", "font_6",
+            "f-locl-1", "f-locl-2", "f-locl-3", "f-locl-4", "f-locl-5", "f-locl-6",
+            "inp-f-size-1", "inp-f-size-2", "inp-f-size-3", "inp-f-size-4", "inp-f-size-5", "inp-f-size-6",
+            "inp-f-lineHeight-1", "inp-f-lineHeight-2", "inp-f-lineHeight-3", "inp-f-lineHeight-4", "inp-f-lineHeight-5", "inp-f-lineHeight-6",
+            "inp-f-tracking-1", "inp-f-tracking-2", "inp-f-tracking-3", "inp-f-tracking-4", "inp-f-tracking-5", "inp-f-tracking-6",
+            "f-features-1", "f-features-2", "f-features-3", "f-features-4", "f-features-5", "f-features-6",
+            "wght-1", "wght-2", "wght-3", "wght-4", "wght-5", "wght-6",
+            "wdth-1", "wdth-2", "wdth-3", "wdth-4", "wdth-5", "wdth-6",
+            "opsz-1", "opsz-2", "opsz-3", "opsz-4", "opsz-5", "opsz-6",
+            "HW_1", "HW_2", "HW_3", "HW_4", "HW_5", "HW_6",
+            "top-column1", "top-column2", "top-column3",
+            "bottom-column4", "bottom-column5", "bottom-column6",
+        ]
+
+        const id_reset = "#resetStorage";
+        const btn_reset = document.querySelector(id_reset);
+
+        function resetSorageData() {
+            for (let i = 0; i < listStorage.length; i++) {
+                localStorage.clear(listStorage[i]);
+                function reload() {
+                    window.location.reload();
+                }
+                setTimeout(reload, 500);
+            }
+        }
+
+    </script>
+
+    <!-- Toggle block on/off -->
+    <script src="./js/Blocks.js" type="text/javascript"></script>
+
+    <!-- Bloki opacity -->
+    <script type="text/javascript">
+        // opacity
+        // 1
+        const nr1 = "top-column1";
+        const box1 = "gcp-1";
+        const el1 = document.getElementById(box1);
+        if (localStorage.getItem(nr1) == null) {
+            el1.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else if (localStorage.getItem(nr1) == "hidden") {
+            el1.classList.replace("grid-col-prop", "grid-col-prop-off");
+        } else if (localStorage.getItem(nr1) == "active") {
+            el1.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else {
+            el1.classList.replace("grid-col-prop", "grid-col-prop-off");
+        }
+        // 2
+        const nr2 = "top-column2";
+        const box2 = "gcp-2";
+        const el2 = document.getElementById(box2);
+        if (localStorage.getItem(nr2) == null) {
+            el2.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else if (localStorage.getItem(nr2) == "hidden") {
+            el2.classList.replace("grid-col-prop", "grid-col-prop-off");
+        } else if (localStorage.getItem(nr2) == "active") {
+            el2.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else {
+            el2.classList.replace("grid-col-prop", "grid-col-prop-off");
+        }
+        // 3
+        const nr3 = "top-column3";
+        const box3 = "gcp-3";
+        const el3 = document.getElementById(box3);
+        if (localStorage.getItem(nr3) == null) {
+            el3.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else if (localStorage.getItem(nr3) == "hidden") {
+            el3.classList.replace("grid-col-prop", "grid-col-prop-off");
+        } else if (localStorage.getItem(nr3) == "active") {
+            el3.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else {
+            el3.classList.replace("grid-col-prop", "grid-col-prop-off");
+        }
+        // 4
+        const nr4 = "bottom-column4";
+        const box4 = "gcp-4";
+        const el4 = document.getElementById(box4);
+        if (localStorage.getItem(nr4) == null) {
+            el4.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else if (localStorage.getItem(nr4) == "hidden") {
+            el4.classList.replace("grid-col-prop", "grid-col-prop-off");
+        } else if (localStorage.getItem(nr4) == "active") {
+            el4.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else {
+            el4.classList.replace("grid-col-prop", "grid-col-prop-off");
+        }
+        // 5
+        const nr5 = "bottom-column5";
+        const box5 = "gcp-5";
+        const el5 = document.getElementById(box5);
+        if (localStorage.getItem(nr5) == null) {
+            el5.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else if (localStorage.getItem(nr5) == "hidden") {
+            el5.classList.replace("grid-col-prop", "grid-col-prop-off");
+        } else if (localStorage.getItem(nr5) == "active") {
+            el5.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else {
+            el5.classList.replace("grid-col-prop", "grid-col-prop-off");
+        }
+        // 6
+        const nr6 = "bottom-column6";
+        const box6 = "gcp-6";
+        const el6 = document.getElementById(box6);
+        if (localStorage.getItem(nr6) == null) {
+            el6.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else if (localStorage.getItem(nr6) == "hidden") {
+            el6.classList.replace("grid-col-prop", "grid-col-prop-off");
+        } else if (localStorage.getItem(nr6) == "active") {
+            el6.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else {
+            el6.classList.replace("grid-col-prop", "grid-col-prop-off");
+        }
+
+    </script>
+
+    <!-- Scroll in all -->
+    <script src="./js/scroll_all.js" type="text/javascript"></script>
+
+    <!-- USE FONT NEW -->
+    <script src="./js/useFont.js" type="text/javascript"></script>
+
+    <!-- Save to data! -->
+    <script src="./js/saveToData.js" type="text/javascript"></script>
+
+    <!-- Variable Settings -->
+    <script src="./js/VF_saveToData.js" type="text/javascript"></script>
+
+    <!-- Does not paste style into the frame  -->
+    <script src="./js/dontPasteStyle.js" type="text/javascript"></script>
+
+    <!-- UseData-->
+    <script src="./js/useDate.js" type="text/javascript"></script>
+
+    <!-- TextSize -->
+    <script src="./js/TextSize.js" type="text/javascript"></script>
+
+    <!-- Import text-->
+    <script src="./js/ImportText.js" type="text/javascript"></script>
+
+    <!-- HardWrap -->
+    <script src="./js/HardWrapp.js" type="text/javascript"></script>
+
+    <!-- Editing paragraphs everywhere! -->
+    <script type="text/javascript">
+
+    // This JavaScript code handles editable paragraphs, allows content synchronization among paragraphs, handles the removal of empty div tags, and stores and retrieves content using the localStorage API. The aktualizujParagrafy function updates paragraphs' content while maintaining synchronization, and the wczytajZLocalStorage function loads previously saved content from localStorage. Event listeners are attached to paragraphs to trigger the content update process.
+
+        // Select all <p> elements with "contenteditable" attribute
+        const paragrafy = document.querySelectorAll("p[contenteditable]");
+
+        // Define the key for localStorage
+        const localStorageKey = "txt";
+
+        // Function to update paragraphs when content changes
+        function aktualizujParagrafy(event) {
+            const aktualnyParagraf = event.target;
+            let tekst = aktualnyParagraf.innerHTML.replace(/<div>/g, '\n').replace(/<\/div>/g, '');
+
+            // Update other paragraphs with the same content
+            paragrafy.forEach(paragraf => {
+                if (paragraf !== aktualnyParagraf) {
+                    paragraf.innerHTML = tekst.replace(/\n/g, '<br>');
+                }
+            });
+
+            // Remove empty div tags and update the current paragraph
+            if (tekst.includes('<div></div>')) {
+                tekst = tekst.replace(/<div><\/div>/g, '');
+                aktualnyParagraf.innerHTML = tekst.replace(/\n/g, '<br>');
+            }
+
+            // Store the updated text in localStorage
+            localStorage.setItem(localStorageKey, tekst);
+        }
+
+        // Function to load saved content from localStorage
+        function wczytajZLocalStorage() {
+            const zapisanyTekst = localStorage.getItem(localStorageKey);
+
+            if (zapisanyTekst) {
+                paragrafy.forEach(paragraf => {
+                    paragraf.innerHTML = zapisanyTekst.replace(/\n/g, '<br>');
+                });
+            }
+        }
+
+        // Load content from localStorage
+        wczytajZLocalStorage();
+
+        // Attach "input" event listener to each paragraph
+        paragrafy.forEach(paragraf => {
+            paragraf.addEventListener("input", aktualizujParagrafy);
+        });
+
+    </script>
+
+</body>
+
+</html>
