@@ -1,4 +1,4 @@
-<!-- App V.0.95 -->
+<!-- App V.0.95.1 -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,18 +6,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Octopus V.0.95</title>
+    <title>Octopus V.0.95.1</title>
     <!-- Meta -->
     <meta name="author" content="Viktoriya Grabowska & Szymon Marciniak">
     <meta name="designer" content="Viktoriya Grabowska & Szymon Marciniak">
     <meta name="description" content="">
     <meta name="abstract" content="">
     <meta name="keywords" content="VariableFont">
-    <!-- <meta name="theme-color" content="#fdfcfc"> -->
-    <!-- <meta name="theme-color" content="#000"> -->
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1ecec" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e2936" />
-    <!-- <meta name="msapplication-TileColor" content="#000"> -->
+    <meta name="theme-color" content="#000">
+    <meta name="msapplication-TileColor" content="#000">
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/favicon/Octopus.icns" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/Octopus.icns">
@@ -40,7 +37,7 @@
 
     <style>
         #Version::before {
-            content: "V.0.95 | BETA";
+            content: "V.0.95.1 | BETA";
             font-family: 'IBM Plex Sans', sans-serif;
             font-weight: 100;
             position: absolute;
@@ -71,6 +68,10 @@
                     <label for="inputfile">Text file</label>
                 </div>
             </li>
+            <li class="btn-nav-hw">
+                <label for="">Hard-Wrap: </label>
+                <input type="text" name="hardWrapInputAll" id="hardWrapInputAll" class="filter-numeric-3" onchange="editHW_all()">
+            </li>
         </ul>
         <span id="Version"></span>
     </nav>
@@ -97,11 +98,6 @@
                                 <label for="col-prop-1">opsz</label>
                                 <input type="text" pattern="[0-9]{4}" name="col-prop-1" id="opsz-1"
                                     class="filter-numeric-4" onchange="VFopsz_1()">
-                            </li>
-                            <li>
-                                <label for="">Hard-Wrap</label>
-                                <input type="text" pattern="[0-9]{4}" name="hardWrap" id="hard-wrap-input-1"
-                                    class="filter-numeric-3" onchange="editHW_1()">
                             </li>
                         </ul>
                     </form>
@@ -132,11 +128,6 @@
                                 <input type="text" name="col-prop-2" id="opsz-2" class="filter-numeric-4"
                                     onchange="VFopsz_2()">
                             </li>
-                            <li>
-                                <label for="">Hard-Wrap</label>
-                                <input type="text" name="hardWrap" id="hard-wrap-input-2" class="filter-numeric-3"
-                                    onchange="editHW_2()">
-                            </li>
                         </ul>
                     </form>
                 </div>
@@ -165,11 +156,6 @@
                                 <label for="col-prop-3">opsz</label>
                                 <input type="text" name="col-prop-3" id="opsz-3" class="filter-numeric-4"
                                     onchange="VFopsz_3()">
-                            </li>
-                            <li>
-                                <label for="">Hard-Wrap</label>
-                                <input type="text" name="hardWrap" id="hard-wrap-input-3" class="filter-numeric-3"
-                                    onchange="editHW_3()">
                             </li>
                         </ul>
                     </form>
@@ -203,11 +189,6 @@
                                     <input type="text" name="col-prop-4" id="opsz-4" class="filter-numeric-4"
                                         onchange="VFopsz_4()">
                                 </li>
-                                <li>
-                                    <label for="">Hard-Wrap</label>
-                                    <input type="text" name="hardWrap" id="hard-wrap-input-4" class="filter-numeric-3"
-                                        onchange="editHW_4()">
-                                </li>
                         </ul>
                     </form>
                 </div>
@@ -237,11 +218,6 @@
                                     <input type="text" name="col-prop-5" id="opsz-5" class="filter-numeric-4"
                                         onchange="VFopsz_5()">
                                 </li>
-                                <li>
-                                    <label for="">Hard-Wrap</label>
-                                    <input type="text" name="hardWrap" id="hard-wrap-input-5" class="filter-numeric-3"
-                                        onchange="editHW_5()">
-                                </li>
                         </ul>
                     </form>
                 </div>
@@ -270,11 +246,6 @@
                                     <label for="col-prop-6">opsz</label>
                                     <input type="text" name="col-prop-6" id="opsz-6" class="filter-numeric-4"
                                         onchange="VFopsz_6()">
-                                </li>
-                                <li>
-                                    <label for="">Hard-Wrap</label>
-                                    <input type="text" name="hardWrap" id="hard-wrap-input-6" class="filter-numeric-3"
-                                        onchange="editHW_6()">
                                 </li>
                         </ul>
                     </form>
