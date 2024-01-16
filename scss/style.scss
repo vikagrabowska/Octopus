@@ -592,3 +592,36 @@ nav {
 #logo-Octopus{
     height: 36px;
 }
+.btn-nav-hw{
+    height: revert;
+    display: flex;
+    flex-wrap: nowrap;
+    /* align-content: center; */
+    align-items: center;
+    justify-content: center;
+
+    label {
+        @include _span;
+        padding: 10px 15px;
+    }
+    input{
+        @include _span;
+        width: 50px;
+    }
+    &:hover {
+        display: flex;
+        background: $white-14;
+    }
+    [type=text] {
+        background: none;
+        border: none;
+        counter-reset: none;
+
+        &:focus {
+            border: none;
+            border-width: 0;
+            box-shadow: none;
+            outline: none;
+        }
+    }
+}
