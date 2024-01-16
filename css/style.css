@@ -43,7 +43,7 @@ nav ul li {
   cursor: pointer;
   height: fit-content;
   background-color: rgb(69, 18, 235);
-  color: rgb(45, 40, 53);
+  color: rgb(46, 41, 54);
   background: rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 12px;
@@ -77,7 +77,7 @@ nav ul li #btn-nav [type=file] {
 }
 nav ul li:hover {
   display: block;
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 #main-content {
@@ -163,7 +163,7 @@ nav ul li:hover {
   word-break: break-all;
   padding: 0 0.2em;
   padding-top: 0.2em;
-  color: rgb(45, 40, 53);
+  color: rgb(46, 41, 54);
 }
 #main-content .wrapper .col .col-p-wrapp [contenteditable] {
   outline: 0px solid transparent;
@@ -266,7 +266,7 @@ nav ul li:hover {
   font-size: 14px;
   padding: 8px 12px;
   background-color: rgb(253, 252, 252);
-  color: rgb(45, 40, 53);
+  color: rgb(46, 41, 54);
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 6px;
   cursor: pointer;
@@ -506,14 +506,14 @@ nav ul li:hover {
   font-weight: 500;
   font-size: 14px;
   transition: ease-in-out 0.2s;
-  color: rgb(45, 40, 53);
+  color: rgb(46, 41, 54);
 }
 #resetStorage:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
 #resetStorage:active {
   background-color: rgba(0, 0, 0, 0.15);
-  color: rgb(45, 40, 53);
+  color: rgb(46, 41, 54);
 }
 
 .warring-pict {
@@ -537,4 +537,40 @@ nav ul li:hover {
 
 #logo-Octopus {
   height: 36px;
+}
+
+.btn-nav-hw {
+  height: revert;
+  display: flex;
+  flex-wrap: nowrap;
+  /* align-content: center; */
+  align-items: center;
+  justify-content: center;
+}
+.btn-nav-hw label {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  padding: 10px 15px;
+}
+.btn-nav-hw input {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  width: 50px;
+}
+.btn-nav-hw:hover {
+  display: flex;
+  background: rgba(255, 255, 255, 0.15);
+}
+.btn-nav-hw [type=text] {
+  background: none;
+  border: none;
+  counter-reset: none;
+}
+.btn-nav-hw [type=text]:focus {
+  border: none;
+  border-width: 0;
+  box-shadow: none;
+  outline: none;
 }
