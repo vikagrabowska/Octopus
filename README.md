@@ -13,7 +13,7 @@ Octopus is also useful for comparing your design to other designs, your roman to
 
 **How to use**
 
-Download the repo and make a copy into a folder (Even your applications folder if you want), and then open the index.html file. To make the fonts you want to test available to the tool, put them in the 'fonts' folder of the tool. Octopus does not see installed fonts on your computer. To make test texts available to load into the tool, put them into the 'assets' folder or any other location on your computer. 
+Download the repo and make a copy into a folder (Even your applications folder if you want), and then open the index.html file. To make the fonts you want to test available to the tool, put them in the 'fonts' folder of the tool. Octopus does not see installed fonts on your computer. To make test texts available to load into the tool, put them into the 'assets' > '_testing texts' folder or any other location on your computer. 
 
 If the tool runs into an issue or doesn't see a change in your font, you may want to refresh your browser or quit the browser and restart it. 
 
