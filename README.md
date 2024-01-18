@@ -23,7 +23,7 @@ A growing body of sample texts are available from [github.com/SorkinType/octo-te
 2. Then, make copies of the fonts you want to test in the [/fonts](fonts) folder of the tool.
 **Octopus does not see installed fonts on your computer.**
 
-3. Then make test texts available in the [/assets](assets) folder.
+3. Then make copies of test texts in the [/assets/\_testing texts](assets/_testing texts) folder, for convenience and archival, or you can load them temporarily from any other location on your computer. 
 
 ## FAQ
 
@@ -31,6 +31,6 @@ A growing body of sample texts are available from [github.com/SorkinType/octo-te
 
 Refresh your browser page, or even quit the browser and restart it.
 
-#### Q: Does Octopus run on and flavor or variety or Linux or Windows? If not we should note that.
+#### Q: Does Octopus run on any version, flavor or variety of system (macOS, GNU+Linux, Windows, iOS, Android)?
 
-It will work on both, as long as used with Chrome, Firefox, Opera or Safari. 
+As a web app, it will work on any system - Chrome, Firefox, Opera or Safari. 
