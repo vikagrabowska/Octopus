@@ -7,6 +7,7 @@ const form_1 = document.querySelector('#form-1');
 const wght_1 = document.getElementById('wght-1');
 const wdth_1 = document.getElementById('wdth-1');
 const opsz_1 = document.getElementById('opsz-1');
+const grad_1 = document.getElementById('grad-1'); // #
 const hw_1 = document.getElementById('hard-wrap-input-1');
 
 // Loading LocalStorage data
@@ -14,10 +15,11 @@ const hw_1 = document.getElementById('hard-wrap-input-1');
 wght_1.value = localStorage.getItem('wght-1');
 wdth_1.value = localStorage.getItem('wdth-1');
 opsz_1.value = localStorage.getItem('opsz-1');
+grad_1.value = localStorage.getItem('grad-1'); // #
 hw_1.value = localStorage.getItem('hard-wrap-input-1');
 
 // Using the saved data in the text
-document.querySelector('#p-t1').style.fontVariationSettings = ("'wght'" + wght_1.value + ', ' + "'wdth'" + wdth_1.value + ', ' + "'opsz'" + opsz_1.value);
+document.querySelector('#p-t1').style.fontVariationSettings = ("'wght'" + wght_1.value + ', ' + "'wdth'" + wdth_1.value + ', ' + "'opsz'" + opsz_1.value + ', ' + "'GRAD'" + grad_1.value); // #
 
 // #1 Data saving method
 form_1.addEventListener('submit', (event) => {
@@ -25,21 +27,24 @@ form_1.addEventListener('submit', (event) => {
     localStorage.setItem('wght-1', wght_1.value);
     localStorage.setItem('wdth-1', wdth_1.value);
     localStorage.setItem('opsz-1', opsz_1.value);
+    localStorage.setItem('grad-1', grad_1.value); //#
     localStorage.setItem('hard-wrap-input-1', hw_1.value);
 
     const a = wght_1.value;
     const b = wdth_1.value;
     const c = opsz_1.value;
+    const d = grad_1.value; //#
 
     // column #1
-    document.tx_1.style.fontVariationSettings = ("'wght'" + a + ', ' + "'wdth'" + b + ', ' + "'opsz'" + c);
+    document.tx_1.style.fontVariationSettings = ("'wght'" + a + ', ' + "'wdth'" + b + ', ' + "'opsz'" + c + ', ' + "'GRAD'" + d);
 });
 // column #1
 function editVF_1() {
     const a = document.getElementById('wght-1').value;
     const b = document.getElementById('wdth-1').value;
     const c = document.getElementById('opsz-1').value;
-    document.getElementById('p-t1').style.fontVariationSettings = ("'wght'" + a + ', ' + "'wdth'" + b + ', ' + "'opsz'" + c);
+    const d = document.getElementById('grad-1').value;
+    document.getElementById('p-t1').style.fontVariationSettings = ("'wght'" + a + ', ' + "'wdth'" + b + ', ' + "'opsz'" + c + ', ' + "'GRAD'" + d);
 }
 
 //2

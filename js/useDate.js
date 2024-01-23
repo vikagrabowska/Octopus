@@ -9,13 +9,14 @@
     const use_wght_1 = document.querySelector("#wght-1").value;
     const use_wdth_1 = document.querySelector("#wdth-1").value;
     const use_opsz_1 = document.querySelector("#opsz-1").value;
+    const use_grad_1 = document.querySelector("#grad-1").value;
     // use
     t_1.style.fontSize = use_fSize_1;
     t_1.style.letterSpacing = (use_fTracking_1 * 0.001) + "em";
     t_1.style.lineHeight = use_fLineHeight_1;
     t_1.lang = use_fLoc_1;//
     t_1.style.fontFeatureSettings = use_fFeatures_1;
-    t_1.style.fontVariationSettings = "'wght'" + use_wght_1 + "," +  "'wdth'" + use_wdth_1 + "," + "'opsz'" + use_opsz_1;
+    t_1.style.fontVariationSettings = "'wght'" + use_wght_1 + "," +  "'wdth'" + use_wdth_1 + "," + "'opsz'" + use_opsz_1 + "," + "'GRAD'" + use_grad_1;
 
     // Text col 2
     const t_2 = document.querySelector("#p-t2");

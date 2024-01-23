@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Octopus V.0.95.1</title>
+    <title>Octopus V.0.95.2</title>
     <!-- Meta -->
     <meta name="author" content="Viktoriya Grabowska & Szymon Marciniak">
     <meta name="designer" content="Viktoriya Grabowska & Szymon Marciniak">
@@ -37,7 +37,7 @@
 
     <style>
         #Version::before {
-            content: "V.0.95.1 | BETA";
+            content: "V.0.95.2 | BETA";
             font-family: 'IBM Plex Sans', sans-serif;
             font-weight: 100;
             position: absolute;
@@ -68,9 +68,10 @@
                     <label for="inputfile">Text file</label>
                 </div>
             </li>
-            <li class="btn-nav-hw">
+            <li class="btn-nav-hw" style="background-color: #fdfcfc;">
                 <label for="">Hard-Wrap: </label>
-                <input type="text" name="hardWrapInputAll" id="hardWrapInputAll" class="filter-numeric-3" onchange="editHW_all()">
+                <input type="text" name="hardWrapInputAll" id="hardWrapInputAll" class="filter-numeric-3"
+                    onchange="editHW_all()">
             </li>
         </ul>
         <span id="Version"></span>
@@ -86,18 +87,19 @@
                             <h2>1</h2>
                             <li>
                                 <label for="col-prop-1">wght</label>
-                                <input type="text" pattern="[0-9]{4}" name="col-prop-1" id="wght-1"
-                                    class="filter-numeric-4" onchange="VFwght_1()">
+                                <input type="text" name="col-prop-1" id="wght-1" class="filter-numeric-4">
                             </li>
                             <li>
                                 <label for="col-prop-1">wdth</label>
-                                <input type="text" pattern="[0-9]{4}" name="col-prop-1" id="wdth-1"
-                                    class="filter-numeric-4" onchange="VFwdth_1()">
+                                <input type="text" name="col-prop-1" id="wdth-1" class="filter-numeric-4">
                             </li>
                             <li>
                                 <label for="col-prop-1">opsz</label>
-                                <input type="text" pattern="[0-9]{4}" name="col-prop-1" id="opsz-1"
-                                    class="filter-numeric-4" onchange="VFopsz_1()">
+                                <input type="text" name="col-prop-1" id="opsz-1" class="filter-numeric-4">
+                            </li>
+                            <li>
+                                <label for="col-prop-1">grad</label>
+                                <input type="text" name="col-prop-1" id="grad-1" class="filter-numeric-4">
                             </li>
                         </ul>
                     </form>
@@ -115,18 +117,19 @@
                             <h2>2</h2>
                             <li>
                                 <label for="col-prop-2">wght</label>
-                                <input type="text" name="col-prop-2" id="wght-2" class="filter-numeric-4"
-                                    onchange="VFwght_2()">
+                                <input type="text" name="col-prop-2" id="wght-2" class="filter-numeric-4">
                             </li>
                             <li>
                                 <label for="col-prop-2">wdth</label>
-                                <input type="text" name="col-prop-2" id="wdth-2" class="filter-numeric-4"
-                                    onchange="VFwdth_2()">
+                                <input type="text" name="col-prop-2" id="wdth-2" class="filter-numeric-4">
                             </li>
                             <li>
                                 <label for="col-prop-2">opsz</label>
-                                <input type="text" name="col-prop-2" id="opsz-2" class="filter-numeric-4"
-                                    onchange="VFopsz_2()">
+                                <input type="text" name="col-prop-2" id="opsz-2" class="filter-numeric-4">
+                            </li>
+                            <li>
+                                <label for="col-prop-2">grad</label>
+                                <input type="text" name="col-prop-2" id="grad-2" class="filter-numeric-4">
                             </li>
                         </ul>
                     </form>
@@ -144,18 +147,19 @@
                             <h2>3</h2>
                             <li>
                                 <label for="col-prop-3">wght</label>
-                                <input type="text" name="col-prop-3" id="wght-3" class="filter-numeric-4"
-                                    onchange="VFwght_3()">
+                                <input type="text" name="col-prop-3" id="wght-3" class="filter-numeric-4">
                             </li>
                             <li>
                                 <label for="col-prop-3">wdth</label>
-                                <input type="text" name="col-prop-3" id="wdth-3" class="filter-numeric-4"
-                                    onchange="VFwdth_3()">
+                                <input type="text" name="col-prop-3" id="wdth-3" class="filter-numeric-4">
                             </li>
                             <li>
                                 <label for="col-prop-3">opsz</label>
-                                <input type="text" name="col-prop-3" id="opsz-3" class="filter-numeric-4"
-                                    onchange="VFopsz_3()">
+                                <input type="text" name="col-prop-3" id="opsz-3" class="filter-numeric-4">
+                            </li>
+                            <li>
+                                <label for="col-prop-3">grad</label>
+                                <input type="text" name="col-prop-3" id="grad-3" class="filter-numeric-4">
                             </li>
                         </ul>
                     </form>
@@ -176,18 +180,19 @@
                             <h2>4</h1>
                                 <li>
                                     <label for="col-prop-4">wght</label>
-                                    <input type="text" name="col-prop-4" id="wght-4" class="filter-numeric-4"
-                                        onchange="VFwght_4()">
+                                    <input type="text" name="col-prop-4" id="wght-4" class="filter-numeric-4">
                                 </li>
                                 <li>
                                     <label for="col-prop-4">wdth</label>
-                                    <input type="text" name="col-prop-4" id="wdth-4" class="filter-numeric-4"
-                                        onchange="VFwdth_4()">
+                                    <input type="text" name="col-prop-4" id="wdth-4" class="filter-numeric-4">
                                 </li>
                                 <li>
                                     <label for="col-prop-4">opsz</label>
-                                    <input type="text" name="col-prop-4" id="opsz-4" class="filter-numeric-4"
-                                        onchange="VFopsz_4()">
+                                    <input type="text" name="col-prop-4" id="opsz-4" class="filter-numeric-4">
+                                </li>
+                                <li>
+                                    <label for="col-prop-4">grad</label>
+                                    <input type="text" name="col-prop-4" id="grad-4" class="filter-numeric-4">
                                 </li>
                         </ul>
                     </form>
@@ -205,18 +210,19 @@
                             <h2>5</h1>
                                 <li>
                                     <label for="col-prop-5">wght</label>
-                                    <input type="text" name="col-prop-5" id="wght-5" class="filter-numeric-4"
-                                        onchange="VFwght_5()">
+                                    <input type="text" name="col-prop-5" id="wght-5" class="filter-numeric-4">
                                 </li>
                                 <li>
                                     <label for="col-prop-5">wdth</label>
-                                    <input type="text" name="col-prop-5" id="wdth-5" class="filter-numeric-4"
-                                        onchange="VFwdth_5()">
+                                    <input type="text" name="col-prop-5" id="wdth-5" class="filter-numeric-4">
                                 </li>
                                 <li>
                                     <label for="col-prop-5">opsz</label>
-                                    <input type="text" name="col-prop-5" id="opsz-5" class="filter-numeric-4"
-                                        onchange="VFopsz_5()">
+                                    <input type="text" name="col-prop-5" id="opsz-5" class="filter-numeric-4">
+                                </li>
+                                <li>
+                                    <label for="col-prop-5">grad</label>
+                                    <input type="text" name="col-prop-5" id="grad-5" class="filter-numeric-4">
                                 </li>
                         </ul>
                     </form>
@@ -234,18 +240,19 @@
                             <h2>6</h1>
                                 <li>
                                     <label for="col-prop-6">wght</label>
-                                    <input type="text" name="col-prop-6" id="wght-6" class="filter-numeric-4"
-                                        onchange="VFwght_6()">
+                                    <input type="text" name="col-prop-6" id="wght-6" class="filter-numeric-4">
                                 </li>
                                 <li>
                                     <label for="col-prop-6">wdth</label>
-                                    <input type="text" name="col-prop-6" id="wdth-6" class="filter-numeric-4"
-                                        onchange="VFwdth_6()">
+                                    <input type="text" name="col-prop-6" id="wdth-6" class="filter-numeric-4">
                                 </li>
                                 <li>
                                     <label for="col-prop-6">opsz</label>
-                                    <input type="text" name="col-prop-6" id="opsz-6" class="filter-numeric-4"
-                                        onchange="VFopsz_6()">
+                                    <input type="text" name="col-prop-6" id="opsz-6" class="filter-numeric-4">
+                                </li>
+                                <li>
+                                    <label for="col-prop-6">grad</label>
+                                    <input type="text" name="col-prop-6" id="grad-6" class="filter-numeric-4">
                                 </li>
                         </ul>
                     </form>
@@ -565,13 +572,13 @@
 
         if (localStorage.getItem("FirstOpen") == null) {
             function close_HelloPop() {
-                const key_HelloPop = "V95";
+                const key_HelloPop = "V95.2";
                 document.querySelector('#hello-octopus').style.display = "none";
                 localStorage.setItem("FirstOpen", key_HelloPop);
             }
 
         }
-        if (localStorage.getItem("FirstOpen") !== "V95") {
+        if (localStorage.getItem("FirstOpen") !== "V95.2") {
             localStorage.clear("FirstOpen");
         }
         else {
@@ -590,15 +597,11 @@
         // Select all input elements with class names starting with "filter-numeric"
         const numericInputs = document.querySelectorAll("[class^='filter-numeric']");
 
-        // Iterate over each numeric input element
         numericInputs.forEach((input) => {
-            // Extract the maximum length value from the class name
-            const maxLength = parseInt(input.classList[0].split('-').pop(), 10);
-
             // Attach an "input" event listener to the input element
             input.addEventListener("input", function (event) {
-                // Filter and limit the input value based on the maximum length
-                event.target.value = filterAndLimit(event.target.value, maxLength);
+                // Filter and limit the input value to digits and a single leading "-"
+                event.target.value = filterAndLimit(event.target.value);
             });
 
             // Attach a "keydown" event listener to the input element
@@ -608,14 +611,17 @@
                     event.preventDefault(); // Prevent the default selection behavior
                     input.select(); // Select the entire input content
                 }
+
+                // Allow only numeric digits, backspace key, and a single leading "-"
+                if (!/^\d$/.test(event.key) && event.key !== 'Backspace' && (event.key !== '-' || input.value.includes('-') || input.selectionStart !== 0)) {
+                    event.preventDefault(); // Prevent entering non-numeric characters or additional "-"
+                }
             });
         });
 
-        // Function to filter and limit the input value
-        function filterAndLimit(inputValue, maxLength) {
-            // Remove all non-digit characters using a regular expression, and limit the length
-            const validValue = inputValue.replace(/\D/g, '').slice(0, maxLength);
-            return validValue; // Return the filtered and limited value
+        function filterAndLimit(value) {
+            // Allow only digits and a single leading "-"
+            return value.replace(/[^\d-]/g, '');
         }
 
     </script>
@@ -645,6 +651,7 @@
             "wght-1", "wght-2", "wght-3", "wght-4", "wght-5", "wght-6",
             "wdth-1", "wdth-2", "wdth-3", "wdth-4", "wdth-5", "wdth-6",
             "opsz-1", "opsz-2", "opsz-3", "opsz-4", "opsz-5", "opsz-6",
+            "grad-1", "grad-2", "grad-3", "grad-4", "grad-5", "grad-6",
             "HW_1", "HW_2", "HW_3", "HW_4", "HW_5", "HW_6",
             "top-column1", "top-column2", "top-column3",
             "bottom-column4", "bottom-column5", "bottom-column6",
@@ -782,7 +789,7 @@
     <!-- Editing paragraphs everywhere! -->
     <script type="text/javascript">
 
-    // This JavaScript code handles editable paragraphs, allows content synchronization among paragraphs, handles the removal of empty div tags, and stores and retrieves content using the localStorage API. The aktualizujParagrafy function updates paragraphs' content while maintaining synchronization, and the wczytajZLocalStorage function loads previously saved content from localStorage. Event listeners are attached to paragraphs to trigger the content update process.
+        // This JavaScript code handles editable paragraphs, allows content synchronization among paragraphs, handles the removal of empty div tags, and stores and retrieves content using the localStorage API. The aktualizujParagrafy function updates paragraphs' content while maintaining synchronization, and the wczytajZLocalStorage function loads previously saved content from localStorage. Event listeners are attached to paragraphs to trigger the content update process.
 
         // Select all <p> elements with "contenteditable" attribute
         const paragrafy = document.querySelectorAll("p[contenteditable]");
