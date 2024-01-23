@@ -133,7 +133,7 @@ nav ul li:hover {
   background-color: rgba(0, 0, 0, 0);
 }
 #main-content .wrapper .col .col-property-content ul li input {
-  width: 30px;
+  width: 40px;
   font-feature-settings: "tnum";
 }
 #main-content .wrapper .col .col-property-content ul li [type=text] {
