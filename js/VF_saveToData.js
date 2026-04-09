@@ -64,3 +64,5 @@ initializeVariableFont(3, { wght: "100", wdth: "100", opsz: "0", grad: "0" });
 initializeVariableFont(4, { wght: "100", wdth: "100", opsz: "0", grad: "0" });
 initializeVariableFont(5, { wght: "100", wdth: "100", opsz: "0", grad: "0" });
 initializeVariableFont(6, { wght: "100", wdth: "100", opsz: "0", grad: "0" });
+initializeVariableFont(7, { wght: "100", wdth: "100", opsz: "0", grad: "0" });
+initializeVariableFont(8, { wght: "100", wdth: "100", opsz: "0", grad: "0" });

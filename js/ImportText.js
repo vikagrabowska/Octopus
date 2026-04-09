@@ -6,6 +6,8 @@ var lista = [
     "#p-t4",
     "#p-t5",
     "#p-t6",
+    "#p-t7",
+    "#p-t8",
 ];
 let columns = lista.length;
 

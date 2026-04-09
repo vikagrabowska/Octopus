@@ -108,3 +108,38 @@ const files = event.target.files;
 const imp_Storage_6 = localStorage.getItem("font_6");
 loadFont("'Col_font_6'", "'" + imp_Storage_6 + "'");
 document.querySelector('#p-t6').style.fontFamily = "'Col_font_6'";
+// 7
+// pobiera ściekę i zapisuje do pamięci
+const file_7 = document.querySelector("#importFont_7");
+file_7.addEventListener("change", (event) => {
+const files = event.target.files;
+    for (const file_7 of files) {
+        const key_font_7 = "font_7";
+        const toStorage_name = file_7.name;
+        const toStorage_path = "./font/" + file_7.name;
+        localStorage.setItem(key_font_7, toStorage_path)
+        loadFont("'Col_font_7'","'" + toStorage_path + "'");
+    }
+});
+// // USE CSS in selector
+const imp_Storage_7 = localStorage.getItem("font_7");
+loadFont("'Col_font_7'", "'" + imp_Storage_7 + "'");
+document.querySelector('#p-t7').style.fontFamily = "'Col_font_7'";
+// 8
+// pobiera ściekę i zapisuje do pamięci
+const file_8 = document.querySelector("#importFont_8");
+file_8.addEventListener("change", (event) => {
+const files = event.target.files;
+    for (const file_8 of files) {
+        const key_font_8 = "font_8";
+        const toStorage_name = file_8.name;
+        const toStorage_path = "./font/" + file_8.name;
+        localStorage.setItem(key_font_8, toStorage_path)
+        loadFont("'Col_font_8'","'" + toStorage_path + "'");
+    }
+});
+// // USE CSS in selector
+const imp_Storage_8 = localStorage.getItem("font_8");
+loadFont("'Col_font_8'", "'" + imp_Storage_8 + "'");
+document.querySelector('#p-t8').style.fontFamily = "'Col_font_8'";
+

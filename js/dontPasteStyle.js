@@ -9,6 +9,8 @@ var lista = [
     "#p-t4",
     "#p-t5",
     "#p-t6",
+    "#p-t7",
+    "#p-t8",
 ]
 // IMPORTANT FUNCTION! When pasting text from another website/file, it does not paste the text style.
 for (i = 0; i < lista.length; i++) {

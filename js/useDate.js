@@ -113,3 +113,42 @@
     t_6.style.fontFeatureSettings = use_fFeatures_6;
     t_6.lang = use_fLoc_6;//
     t_6.style.fontVariationSettings = "'wght'" + use_wght_6 + "," +  "'wdth'" + use_wdth_6 + "," + "'opsz'" + use_opsz_6;
+
+    // Text col 7
+    const t_7 = document.querySelector("#p-t7");
+    const use_fSize_7 = document.querySelector("#inp-f-size-7").value;
+    let use_fTracking_7 = document.querySelector("#inp-f-tracking-7").value;
+    const use_fLineHeight_7 = document.querySelector("#inp-f-lineHeight-7").value;
+    const use_fFeatures_7 = document.querySelector("#f-features-7").value;
+    const use_fLoc_7 = document.querySelector("#f-locl-7").value;//
+    // VF
+    const use_wght_7 = document.querySelector("#wght-7").value;
+    const use_wdth_7 = document.querySelector("#wdth-7").value;
+    const use_opsz_7 = document.querySelector("#opsz-7").value;
+    // use
+    t_7.style.fontSize = use_fSize_7;
+    t_7.style.letterSpacing = (use_fTracking_7 * 0.001) + "em";
+    t_7.style.lineHeight = use_fLineHeight_7;
+    t_7.style.fontFeatureSettings = use_fFeatures_7;
+    t_7.lang = use_fLoc_7;//
+    t_7.style.fontVariationSettings = "'wght'" + use_wght_7 + "," +  "'wdth'" + use_wdth_7 + "," + "'opsz'" + use_opsz_7;
+
+    // Text col 8
+    const t_8 = document.querySelector("#p-t8");
+    const use_fSize_8 = document.querySelector("#inp-f-size-8").value;
+    let use_fTracking_8 = document.querySelector("#inp-f-tracking-8").value;
+    const use_fLineHeight_8 = document.querySelector("#inp-f-lineHeight-8").value;
+    const use_fFeatures_8 = document.querySelector("#f-features-8").value;
+    const use_fLoc_8 = document.querySelector("#f-locl-8").value;//
+    // VF
+    const use_wght_8 = document.querySelector("#wght-8").value;
+    const use_wdth_8 = document.querySelector("#wdth-8").value;
+    const use_opsz_8 = document.querySelector("#opsz-8").value;
+    // use
+    t_8.style.fontSize = use_fSize_8;
+    t_8.style.letterSpacing = (use_fTracking_8 * 0.001) + "em";
+    t_8.style.lineHeight = use_fLineHeight_8;
+    t_8.style.fontFeatureSettings = use_fFeatures_8;
+    t_8.lang = use_fLoc_8;//
+    t_8.style.fontVariationSettings = "'wght'" + use_wght_8 + "," +  "'wdth'" + use_wdth_8 + "," + "'opsz'" + use_opsz_8;
+

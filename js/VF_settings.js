@@ -249,3 +249,86 @@ function editVF_6() {
     const c = document.getElementById('opsz-6').value;
     document.getElementById('p-t6').style.fontVariationSettings = ("'wght'" + a + ', ' + "'wdth'" + b + ', ' + "'opsz'" + c);
 }
+
+//7
+const form_7 = document.querySelector('#form-7');
+
+// #7
+const wght_7 = document.getElementById('wght-7');
+const wdth_7 = document.getElementById('wdth-7');
+const opsz_7 = document.getElementById('opsz-7');
+const hw_7 = document.getElementById('hard-wrap-input-7');
+
+// Loading LocalStorage data
+// #1
+wght_7.value = localStorage.getItem('wght-7');
+wdth_7.value = localStorage.getItem('wdth-7');
+opsz_7.value = localStorage.getItem('opsz-7');
+hw_7.value = localStorage.getItem('hard-wrap-input-7');
+
+// Using the saved data in the text
+document.querySelector('#p-t7').style.fontVariationSettings = ("'wght'" + wght_7.value + ', ' + "'wdth'" + wdth_7.value + ', ' + "'opsz'" + opsz_7.value);
+
+// #7 Data saving method
+form_7.addEventListener('submit', (event) => {
+    event.preventDefault();
+    localStorage.setItem('wght-7', wght_7.value);
+    localStorage.setItem('wdth-7', wdth_7.value);
+    localStorage.setItem('opsz-7', opsz_7.value);
+    localStorage.setItem('hard-wrap-input-7', hw_7.value);
+
+    const a = wght_7.value;
+    const b = wdth_7.value;
+    const c = opsz_7.value;
+    // column #7
+    document.getElementById('p-t7').style.fontVariationSettings = ("'wght'" + a + ', ' + "'wdth'" + b + ', ' + "'opsz'" + c);
+});
+// column #7 
+function editVF_7() {
+    const a = document.getElementById('wght-7').value;
+    const b = document.getElementById('wdth-7').value;
+    const c = document.getElementById('opsz-7').value;
+    document.getElementById('p-t7').style.fontVariationSettings = ("'wght'" + a + ', ' + "'wdth'" + b + ', ' + "'opsz'" + c);
+}
+
+
+//8
+const form_8 = document.querySelector('#form-8');
+
+// #8
+const wght_8 = document.getElementById('wght-8');
+const wdth_8 = document.getElementById('wdth-8');
+const opsz_8 = document.getElementById('opsz-8');
+const hw_8 = document.getElementById('hard-wrap-input-8');
+
+// Loading LocalStorage data
+// #1
+wght_8.value = localStorage.getItem('wght-8');
+wdth_8.value = localStorage.getItem('wdth-8');
+opsz_8.value = localStorage.getItem('opsz-8');
+hw_8.value = localStorage.getItem('hard-wrap-input-8');
+
+// Using the saved data in the text
+document.querySelector('#p-t8').style.fontVariationSettings = ("'wght'" + wght_8.value + ', ' + "'wdth'" + wdth_8.value + ', ' + "'opsz'" + opsz_8.value);
+
+// #8 Data saving method
+form_8.addEventListener('submit', (event) => {
+    event.preventDefault();
+    localStorage.setItem('wght-8', wght_8.value);
+    localStorage.setItem('wdth-8', wdth_8.value);
+    localStorage.setItem('opsz-8', opsz_8.value);
+    localStorage.setItem('hard-wrap-input-8', hw_8.value);
+
+    const a = wght_8.value;
+    const b = wdth_8.value;
+    const c = opsz_8.value;
+    // column #8
+    document.getElementById('p-t8').style.fontVariationSettings = ("'wght'" + a + ', ' + "'wdth'" + b + ', ' + "'opsz'" + c);
+});
+// column #8 
+function editVF_8() {
+    const a = document.getElementById('wght-8').value;
+    const b = document.getElementById('wdth-8').value;
+    const c = document.getElementById('opsz-8').value;
+    document.getElementById('p-t8').style.fontVariationSettings = ("'wght'" + a + ', ' + "'wdth'" + b + ', ' + "'opsz'" + c);
+}

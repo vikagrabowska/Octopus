@@ -711,3 +711,237 @@ else {
 document.querySelector(fLocl_6).addEventListener("change", locl_6);
 // --END 6--
 // ---------
+// ---------
+// For 7 ---
+const fSize_7 = "#inp-f-size-7";
+let fTracking_7 = "#inp-f-tracking-7";
+const fLineHeight_7 = "#inp-f-lineHeight-7";
+const fFeatures_7 = "#f-features-7";
+const fLocl_7 = "#f-locl-7";
+// VF
+
+// Text column
+const id_t_7 = "#p-t7";
+
+// Keys
+const key_fSize_7 = "inp-f-size-7";
+const key_fTracking_7 = "inp-f-tracking-7";
+const key_fLineHeight_7 = "inp-f-lineHeight-7";
+const key_fFeatures_7 = "f-features-7";
+const key_fLocl_7 = "f-locl-7";
+
+// Default value
+const defValue_fSize_7 = "64pt";
+const defValue_fTracking_7 = "0";
+const defValue_fLineHeight_7 = "1.25";
+const defValue_fFeatures_7 = "";
+const defValue_fLocl_7 = "";
+
+// FontSize 7
+function textSize_7() {
+    const obj = document.querySelector(fSize_7);
+    const t_7 = document.querySelector(id_t_7);
+    localStorage.setItem(key_fSize_7, obj.value);
+    t_7.style.fontSize = obj.value;
+}
+if (localStorage.getItem(key_fSize_7) == null) {
+    const fS_7 = document.querySelector(fSize_7);
+    const t_7 = document.querySelector(id_t_7);
+    fS_7.value = defValue_fSize_7;
+    t_7.style.fontSize = defValue_fSize_7;
+} else {
+    document.querySelector(fSize_7).value = localStorage.getItem(key_fSize_7);
+}
+document.querySelector(fSize_7).addEventListener("change", textSize_7);
+
+// Tracking 7
+function tracking_7() {
+    const obj = document.querySelector(fTracking_7);
+    const t_7 = document.querySelector(id_t_7);
+    localStorage.setItem(key_fTracking_7, obj.value);
+    t_7.style.letterSpacing = (obj.value  * 0.001) + "em";
+}
+
+if (localStorage.getItem(key_fTracking_7) == null) {
+    const fT_7 = document.querySelector(fTracking_7);
+    const t_7 = document.querySelector(id_t_7);
+    fT_7.value = defValue_fTracking_7;
+    t_7.style.letterSpacing = defValue_fTracking_7;
+} else {
+    document.querySelector(fTracking_7).value = localStorage.getItem(key_fTracking_7);
+}
+document.querySelector(fTracking_7).addEventListener("change", tracking_7);
+
+// LineHeight 7
+function lineHeight_7() {
+    const obj = document.querySelector(fLineHeight_7);
+    const t_7 = document.querySelector(id_t_7);
+    localStorage.setItem(key_fLineHeight_7, obj.value);
+    t_7.style.lineHeight = obj.value;
+}
+
+if (localStorage.getItem(key_fLineHeight_7) == null) {
+    const fL_7 = document.querySelector(fLineHeight_7);
+    const t_7 = document.querySelector(id_t_7);
+    fL_7.value = defValue_fLineHeight_7;
+    t_7.style.lineHeight = defValue_fLineHeight_7;
+}
+else {
+    document.querySelector(fLineHeight_7).value = localStorage.getItem(key_fLineHeight_7);
+}
+document.querySelector(fLineHeight_7).addEventListener("change", lineHeight_7);
+
+// Features 7
+function features_7() {
+    const obj = document.querySelector(fFeatures_7);
+    const t_7 = document.querySelector(id_t_7);
+    localStorage.setItem(key_fFeatures_7, obj.value);
+    t_7.style.fontFeatureSettings = obj.value;
+}
+if (localStorage.getItem(key_fFeatures_7) == null) {
+    const fF_7 = document.querySelector(fFeatures_7);
+    const t_7 = document.querySelector(id_t_7);
+    fF_7.value = defValue_fFeatures_7;
+    t_7.style.fontFeatureSettings = defValue_fFeatures_7;
+}
+else {
+    document.querySelector(fFeatures_7).value = localStorage.getItem(key_fFeatures_7);
+}
+document.querySelector(fFeatures_7).addEventListener("change", features_7);
+
+// Locl 7
+function locl_7() {
+    const obj = document.querySelector(fLocl_7);
+    const t_7 = document.querySelector(id_t_7);
+    localStorage.setItem(key_fLocl_7, obj.value);
+    t_7.lang = obj.value;
+}
+if (localStorage.getItem(key_fLocl_7) == null) {
+    const fLoc_7 = document.querySelector(fLocl_7);
+    const t_7 = document.querySelector(id_t_7);
+    fLoc_7.value = defValue_fLocl_7;
+    t_7.lang = defValue_fLocl_7;
+}
+else {
+    document.querySelector(fLocl_7).value = localStorage.getItem(key_fLocl_7);
+}
+document.querySelector(fLocl_7).addEventListener("change", locl_7);
+// --END 7--
+// ---------
+// ---------
+// For 8 ---
+const fSize_8 = "#inp-f-size-8";
+let fTracking_8 = "#inp-f-tracking-8";
+const fLineHeight_8 = "#inp-f-lineHeight-8";
+const fFeatures_8 = "#f-features-8";
+const fLocl_8 = "#f-locl-8";
+// VF
+
+// Text column
+const id_t_8 = "#p-t8";
+
+// Keys
+const key_fSize_8 = "inp-f-size-8";
+const key_fTracking_8 = "inp-f-tracking-8";
+const key_fLineHeight_8 = "inp-f-lineHeight-8";
+const key_fFeatures_8 = "f-features-8";
+const key_fLocl_8 = "f-locl-8";
+
+// Default value
+const defValue_fSize_8 = "64pt";
+const defValue_fTracking_8 = "0";
+const defValue_fLineHeight_8 = "1.25";
+const defValue_fFeatures_8 = "";
+const defValue_fLocl_8 = "";
+
+// FontSize 8
+function textSize_8() {
+    const obj = document.querySelector(fSize_8);
+    const t_8 = document.querySelector(id_t_8);
+    localStorage.setItem(key_fSize_8, obj.value);
+    t_8.style.fontSize = obj.value;
+}
+if (localStorage.getItem(key_fSize_8) == null) {
+    const fS_8 = document.querySelector(fSize_8);
+    const t_8 = document.querySelector(id_t_8);
+    fS_8.value = defValue_fSize_8;
+    t_8.style.fontSize = defValue_fSize_8;
+} else {
+    document.querySelector(fSize_8).value = localStorage.getItem(key_fSize_8);
+}
+document.querySelector(fSize_8).addEventListener("change", textSize_8);
+
+// Tracking 8
+function tracking_8() {
+    const obj = document.querySelector(fTracking_8);
+    const t_8 = document.querySelector(id_t_8);
+    localStorage.setItem(key_fTracking_8, obj.value);
+    t_8.style.letterSpacing = (obj.value  * 0.001) + "em";
+}
+
+if (localStorage.getItem(key_fTracking_8) == null) {
+    const fT_8 = document.querySelector(fTracking_8);
+    const t_8 = document.querySelector(id_t_8);
+    fT_8.value = defValue_fTracking_8;
+    t_8.style.letterSpacing = defValue_fTracking_8;
+} else {
+    document.querySelector(fTracking_8).value = localStorage.getItem(key_fTracking_8);
+}
+document.querySelector(fTracking_8).addEventListener("change", tracking_8);
+
+// LineHeight 8
+function lineHeight_8() {
+    const obj = document.querySelector(fLineHeight_8);
+    const t_8 = document.querySelector(id_t_8);
+    localStorage.setItem(key_fLineHeight_8, obj.value);
+    t_8.style.lineHeight = obj.value;
+}
+
+if (localStorage.getItem(key_fLineHeight_8) == null) {
+    const fL_8 = document.querySelector(fLineHeight_8);
+    const t_8 = document.querySelector(id_t_8);
+    fL_8.value = defValue_fLineHeight_8;
+    t_8.style.lineHeight = defValue_fLineHeight_8;
+}
+else {
+    document.querySelector(fLineHeight_8).value = localStorage.getItem(key_fLineHeight_8);
+}
+document.querySelector(fLineHeight_8).addEventListener("change", lineHeight_8);
+
+// Features 8
+function features_8() {
+    const obj = document.querySelector(fFeatures_8);
+    const t_8 = document.querySelector(id_t_8);
+    localStorage.setItem(key_fFeatures_8, obj.value);
+    t_8.style.fontFeatureSettings = obj.value;
+}
+if (localStorage.getItem(key_fFeatures_8) == null) {
+    const fF_8 = document.querySelector(fFeatures_8);
+    const t_8 = document.querySelector(id_t_8);
+    fF_8.value = defValue_fFeatures_8;
+    t_8.style.fontFeatureSettings = defValue_fFeatures_8;
+}
+else {
+    document.querySelector(fFeatures_8).value = localStorage.getItem(key_fFeatures_8);
+}
+document.querySelector(fFeatures_8).addEventListener("change", features_8);
+
+// Locl 8
+function locl_8() {
+    const obj = document.querySelector(fLocl_8);
+    const t_8 = document.querySelector(id_t_8);
+    localStorage.setItem(key_fLocl_8, obj.value);
+    t_8.lang = obj.value;
+}
+if (localStorage.getItem(key_fLocl_8) == null) {
+    const fLoc_8 = document.querySelector(fLocl_8);
+    const t_8 = document.querySelector(id_t_8);
+    fLoc_8.value = defValue_fLocl_8;
+    t_8.lang = defValue_fLocl_8;
+}
+else {
+    document.querySelector(fLocl_8).value = localStorage.getItem(key_fLocl_8);
+}
+document.querySelector(fLocl_8).addEventListener("change", locl_8);
+// --END 8--
+// ---------

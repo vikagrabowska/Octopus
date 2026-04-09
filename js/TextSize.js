@@ -52,3 +52,21 @@ function changeTextSize_6() {
         });
     }
 }
+function changeTextSize_6() {
+    for (i = 0; i < 1; i++) {
+        var input = document.getElementById('inp-f-size-6').value;
+        const n = document.querySelectorAll('#p-t6')
+        n.forEach(el => {
+            el.style.fontSize = input;
+        });
+    }
+}
+function changeTextSize_8() {
+    for (i = 0; i < 1; i++) {
+        var input = document.getElementById('inp-f-size-8').value;
+        const n = document.querySelectorAll('#p-t8')
+        n.forEach(el => {
+            el.style.fontSize = input;
+        });
+    }
+}
