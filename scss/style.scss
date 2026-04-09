@@ -156,7 +156,9 @@ nav {
             .col-scrl-3,
             .col-scrl-4,
             .col-scrl-5,
-            .col-scrl-6 {
+            .col-scrl-6,
+            .col-scrl-7,
+            .col-scrl-8 {
                 overflow: scroll;
             }
 
@@ -214,7 +216,7 @@ nav {
 
         .popup {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             grid-gap: 10px;
             grid-auto-columns: 100px;
 
