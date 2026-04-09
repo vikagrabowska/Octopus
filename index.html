@@ -1,4 +1,4 @@
-<!-- App V.0.95.1 -->
+<!-- App V.0.95.3 -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Octopus V.0.95.2</title>
+    <title>Octopus V.0.95.3</title>
     <!-- Meta -->
     <meta name="author" content="Viktoriya Grabowska & Szymon Marciniak">
     <meta name="designer" content="Viktoriya Grabowska & Szymon Marciniak">
@@ -37,7 +37,7 @@
 
     <style>
         #Version::before {
-            content: "V.0.95.2 | BETA";
+            content: "V.0.95.3 | BETA";
             font-family: 'IBM Plex Sans', sans-serif;
             font-weight: 100;
             position: absolute;
@@ -169,6 +169,36 @@
                     <p id="p-t3" spellcheck="false" contenteditable></p> <!-- P -->
                 </div>
             </div><!-- $ -->
+            <div id="top-column7" class="col col-7 col-top">
+                <!-- Head -->
+                <div class="col-property-content" onselectstart="return false;">
+                    <form id="form-7">
+                        <ul>
+                            <h2>7</h2>
+                            <li>
+                                <label for="col-prop-7">wght</label>
+                                <input type="text" name="col-prop-7" id="wght-7" class="filter-numeric-4">
+                            </li>
+                            <li>
+                                <label for="col-prop-7">wdth</label>
+                                <input type="text" name="col-prop-7" id="wdth-7" class="filter-numeric-4">
+                            </li>
+                            <li>
+                                <label for="col-prop-7">opsz</label>
+                                <input type="text" name="col-prop-7" id="opsz-7" class="filter-numeric-4">
+                            </li>
+                            <li>
+                                <label for="col-prop-7">grad</label>
+                                <input type="text" name="col-prop-7" id="grad-7" class="filter-numeric-4">
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <!-- & -->
+                <div class="col-p-wrapp col-scrl-7">
+                    <p id="p-t7" spellcheck="false" contenteditable></p> <!-- P -->
+                </div>
+            </div><!-- $ -->
         </div>
         <!-- BOTTOM -->
         <div id="row-bot" class="wrap-col-bot wrapper">
@@ -259,6 +289,35 @@
                 </div>
                 <div class="col-p-wrapp col-scrl-6">
                     <p id="p-t6" spellcheck="false" contenteditable></p> <!-- P -->
+                </div>
+            </div><!-- $ -->
+            <div id="bottom-column8" class="col col-8 col-bot">
+                <!-- Head -->
+                <div class="col-property-content" onselectstart="return false;">
+                    <form id="form-8">
+                        <ul>
+                            <h2>8</h1>
+                                <li>
+                                    <label for="col-prop-8">wght</label>
+                                    <input type="text" name="col-prop-8" id="wght-8" class="filter-numeric-4">
+                                </li>
+                                <li>
+                                    <label for="col-prop-8">wdth</label>
+                                    <input type="text" name="col-prop-8" id="wdth-8" class="filter-numeric-4">
+                                </li>
+                                <li>
+                                    <label for="col-prop-8">opsz</label>
+                                    <input type="text" name="col-prop-8" id="opsz-8" class="filter-numeric-4">
+                                </li>
+                                <li>
+                                    <label for="col-prop-8">grad</label>
+                                    <input type="text" name="col-prop-8" id="grad-8" class="filter-numeric-4">
+                                </li>
+                        </ul>
+                    </form>
+                </div>
+                <div class="col-p-wrapp col-scrl-8">
+                    <p id="p-t8" spellcheck="false" contenteditable></p> <!-- P -->
                 </div>
             </div><!-- $ -->
         </div>
@@ -417,6 +476,49 @@
                     </ul>
                 </div>
 
+                <div id="gcp-7" class="grid-col-prop gcp-7">
+                    <div class="grid-col-prop-head">
+                        <button id="toggle-top" class="btn-close"
+                            onclick="toggleColumn('top', 'top-column7', 'container-list-7', 'gcp-7')"></button>
+                        <div class="custom-input-font-container">
+                            <input type="file" name="_font" id="importFont_7"
+                                class="inp-font-hidden grid-inp-col-f-import" accept=".ttf, .otf, .woff, .woff2">
+                            <label class="custom-input-font" for="importFont_7">Font</label>
+                        </div>
+                    </div>
+                    <ul id="container-list-7">
+                        <li>
+                            <label for="FONT_SIZE">Font size</label>
+                            <input id="inp-f-size-7" class="grid-inp-col-f-settings" type="text" name="FONT_SIZE"
+                                onchange="textSize_7()">
+                        </li>
+                        <!-- ADD NEW -->
+                        <li>
+                            <label for="TRACKING">Tracking</label>
+                            <input id="inp-f-tracking-7" class="grid-inp-col-f-settings" type="text" name="TRACKING"
+                                onchange="tracking_7()">
+                        </li>
+                        <li>
+                            <label for="LINE_HEIGHT">Line Height</label>
+                            <input id="inp-f-lineHeight-7" class="grid-inp-col-f-settings" type="text"
+                                name="LINE_HEIGHT" onchange="lineHeight_7()">
+                        </li>
+                        <li>
+                            <label for="LOCL">.locl <a class="info-pict"
+                                    href="https://www.w3schools.com/tags/ref_country_codes.asp"
+                                    target="_blank"></a></label>
+                            <input type="text" name="LOCL" id="f-locl-7" class="grid-inp-col-f-settings"
+                                onchange="locl_7()" placeholder="ISO code">
+                        </li>
+                        <li class="OT-features">
+                            <label for="FEATURES">Features</label>
+                            <input type="text" name="FEATURES" id="f-features-7" class="grid-inp-col-f-features"
+                                onchange="features_7()" placeholder='e.g. "ss01", "calt"'>
+                        </li>
+                        <!-- $ ADD NEW -->
+                    </ul>
+                </div>
+
                 <div id="gcp-4" class="grid-col-prop gcp-4">
                     <div class="grid-col-prop-head">
                         <button id="toggle-bottom" class="btn-close"
@@ -550,6 +652,49 @@
                     </ul>
                 </div>
 
+                <div id="gcp-8" class="grid-col-prop gcp-8">
+                    <div class="grid-col-prop-head">
+                        <button id="toggle-bottom" class="btn-close"
+                            onclick="toggleColumn('bottom', 'bottom-column8', 'container-list-8', 'gcp-8')"></button>
+                        <div class="custom-input-font-container">
+                            <input type="file" name="_font" id="importFont_8"
+                                class="inp-font-hidden grid-inp-col-f-import" accept=".ttf, .otf, .woff, .woff2">
+                            <label class="custom-input-font" for="importFont_8">Font</label>
+                        </div>
+                    </div>
+                    <ul id="container-list-8">
+                        <li>
+                            <label for="FONT_SIZE">Font size</label>
+                            <input id="inp-f-size-8" class="grid-inp-col-f-settings" type="text" name="FONT_SIZE"
+                                onchange="textSize_8()">
+                        </li>
+                        <!-- ADD NEW -->
+                        <li>
+                            <label for="TRACKING">Tracking</label>
+                            <input id="inp-f-tracking-8" class="grid-inp-col-f-settings" type="text" name="TRACKING"
+                                onchange="tracking_8()">
+                        </li>
+                        <li>
+                            <label for="LINE_HEIGHT">Line Height</label>
+                            <input id="inp-f-lineHeight-8" class="grid-inp-col-f-settings" type="text"
+                                name="LINE_HEIGHT" onchange="lineHeight_8()">
+                        </li>
+                        <li>
+                            <label for="LOCL">.locl <a class="info-pict"
+                                    href="https://www.w3schools.com/tags/ref_country_codes.asp"
+                                    target="_blank"></a></label>
+                            <input type="text" name="LOCL" id="f-locl-8" class="grid-inp-col-f-settings"
+                                onchange="locl_8()" placeholder="ISO code">
+                        </li>
+                        <li class="OT-features">
+                            <label for="FEATURES">Features</label>
+                            <input type="text" name="FEATURES" id="f-features-8" class="grid-inp-col-f-features"
+                                onchange="features_8()" placeholder='e.g. "ss01", "calt"'>
+                        </li>
+                        <!-- $ ADD NEW -->
+                    </ul>
+                </div>
+
             </div>
         </div><!--$-->
     </div>
@@ -572,13 +717,13 @@
 
         if (localStorage.getItem("FirstOpen") == null) {
             function close_HelloPop() {
-                const key_HelloPop = "V95.2";
+                const key_HelloPop = "V95.3";
                 document.querySelector('#hello-octopus').style.display = "none";
                 localStorage.setItem("FirstOpen", key_HelloPop);
             }
 
         }
-        if (localStorage.getItem("FirstOpen") !== "V95.2") {
+        if (localStorage.getItem("FirstOpen") !== "V95.3") {
             localStorage.clear("FirstOpen");
         }
         else {
@@ -615,7 +760,7 @@
                 // Allow only numeric digits, backspace key, and a single leading "-"
                 if (!/^\d$/.test(event.key) && event.key !== 'Backspace' && (event.key !== '-' || input.value.includes('-') || input.selectionStart !== 0)) {
                     event.preventDefault(); // Prevent entering non-numeric characters or additional "-"
-                }
+                }ą
             });
         });
 
@@ -642,19 +787,20 @@
         var listStorage = [
             "FirstOpen",
             "txt",
-            "font_1", "font_2", "font_3", "font_4", "font_5", "font_6",
-            "f-locl-1", "f-locl-2", "f-locl-3", "f-locl-4", "f-locl-5", "f-locl-6",
-            "inp-f-size-1", "inp-f-size-2", "inp-f-size-3", "inp-f-size-4", "inp-f-size-5", "inp-f-size-6",
-            "inp-f-lineHeight-1", "inp-f-lineHeight-2", "inp-f-lineHeight-3", "inp-f-lineHeight-4", "inp-f-lineHeight-5", "inp-f-lineHeight-6",
-            "inp-f-tracking-1", "inp-f-tracking-2", "inp-f-tracking-3", "inp-f-tracking-4", "inp-f-tracking-5", "inp-f-tracking-6",
-            "f-features-1", "f-features-2", "f-features-3", "f-features-4", "f-features-5", "f-features-6",
-            "wght-1", "wght-2", "wght-3", "wght-4", "wght-5", "wght-6",
-            "wdth-1", "wdth-2", "wdth-3", "wdth-4", "wdth-5", "wdth-6",
-            "opsz-1", "opsz-2", "opsz-3", "opsz-4", "opsz-5", "opsz-6",
-            "grad-1", "grad-2", "grad-3", "grad-4", "grad-5", "grad-6",
-            "HW_1", "HW_2", "HW_3", "HW_4", "HW_5", "HW_6",
+            "font_1", "font_2", "font_3", "font_4", "font_5", "font_6", "font_7", "font_8",
+            "f-locl-1", "f-locl-2", "f-locl-3", "f-locl-4", "f-locl-5", "f-locl-6", "f-locl-7", "f-locl-8",
+            "inp-f-size-1", "inp-f-size-2", "inp-f-size-3", "inp-f-size-4", "inp-f-size-5", "inp-f-size-6", "inp-f-size-7", "inp-f-size-8",
+            "inp-f-lineHeight-1", "inp-f-lineHeight-2", "inp-f-lineHeight-3", "inp-f-lineHeight-4", "inp-f-lineHeight-5", "inp-f-lineHeight-6", "inp-f-lineHeight-7", "inp-f-lineHeight-8",
+            "inp-f-tracking-1", "inp-f-tracking-2", "inp-f-tracking-3", "inp-f-tracking-4", "inp-f-tracking-5", "inp-f-tracking-6", "inp-f-tracking-7", "inp-f-tracking-8",
+            "f-features-1", "f-features-2", "f-features-3", "f-features-4", "f-features-5", "f-features-6", "f-features-7", "f-features-8",
+            "wght-1", "wght-2", "wght-3", "wght-4", "wght-5", "wght-6", "wght-7", "wght-8",
+            "wdth-1", "wdth-2", "wdth-3", "wdth-4", "wdth-5", "wdth-6", "wdth-7", "wdth-8",
+            "opsz-1", "opsz-2", "opsz-3", "opsz-4", "opsz-5", "opsz-6", "opsz-7", "opsz-8",
+            "grad-1", "grad-2", "grad-3", "grad-4", "grad-5", "grad-6", "grad-7", "grad-8",
+            "HW_1", "HW_2", "HW_3", "HW_4", "HW_5", "HW_6", "HW_7", "HW_8",
             "top-column1", "top-column2", "top-column3",
-            "bottom-column4", "bottom-column5", "bottom-column6",
+            "bottom-column4", "bottom-column5", "bottom-column6", 
+            "top-column7", "bottom-column8",
         ]
 
         const id_reset = "#resetStorage";
@@ -755,6 +901,32 @@
             el6.classList.replace("grid-col-prop-off", "grid-col-prop");
         } else {
             el6.classList.replace("grid-col-prop", "grid-col-prop-off");
+        }
+        // 7
+        const nr7 = "top-column7";
+        const box7 = "gcp-7";
+        const el7 = document.getElementById(box7);
+        if (localStorage.getItem(nr7) == null) {
+            el7.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else if (localStorage.getItem(nr7) == "hidden") {
+            el7.classList.replace("grid-col-prop", "grid-col-prop-off");
+        } else if (localStorage.getItem(nr7) == "active") {
+            el7.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else {
+            el7.classList.replace("grid-col-prop", "grid-col-prop-off");
+        }
+        // 7
+        const nr8 = "bottom-column8";
+        const box8 = "gcp-8";
+        const el8 = document.getElementById(box8);
+        if (localStorage.getItem(nr8) == null) {
+            el8.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else if (localStorage.getItem(nr8) == "hidden") {
+            el8.classList.replace("grid-col-prop", "grid-col-prop-off");
+        } else if (localStorage.getItem(nr8) == "active") {
+            el8.classList.replace("grid-col-prop-off", "grid-col-prop");
+        } else {
+            el8.classList.replace("grid-col-prop", "grid-col-prop-off");
         }
 
     </script>
