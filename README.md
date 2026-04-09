@@ -5,7 +5,7 @@ Initially created by Viktoriya Grabowska and Szymon Marciniak, it became a publi
 Special thanks to Eben Sorkin and Dave Crossland for making this happen.
 
 Octopus was made to test fonts with large design spaces more efficiently.
-It offer up to six different views of a variable font, all at the same time.
+It offer up to eight different views of a variable font, all at the same time.
 It also allows you choose your views on or in-between masters.
 
 Octopus is useful as a QA tool, as looking in-between masters can catch inconsistencies in your letterforms or spacing, especially interpolation problems.
