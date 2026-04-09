@@ -152,7 +152,9 @@ nav ul li:hover {
 #main-content .wrapper .col .col-scrl-3,
 #main-content .wrapper .col .col-scrl-4,
 #main-content .wrapper .col .col-scrl-5,
-#main-content .wrapper .col .col-scrl-6 {
+#main-content .wrapper .col .col-scrl-6,
+#main-content .wrapper .col .col-scrl-7,
+#main-content .wrapper .col .col-scrl-8 {
   overflow: scroll;
 }
 #main-content .wrapper .col .col-p-wrapp {
@@ -198,7 +200,7 @@ nav ul li:hover {
 }
 #features-settings #features-settings-content .popup {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
   grid-auto-columns: 100px;
 }
