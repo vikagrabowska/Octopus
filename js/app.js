@@ -20,12 +20,12 @@
         tracking: '0',
         lineHeight: '1.25',
         features: '',
-        locl: '',
-        wght: '100',
-        wdth: '100',
-        opsz: '0',
-        grad: '0'
+        locl: ''
     };
+
+    // Per-column axes detected from loaded fonts
+    // { colNum: [ { tag, minValue, maxValue, defaultValue }, ... ] }
+    const columnAxes = {};
 
     const TRACKING_MULTIPLIER = 0.001;
     const SYNC_BREAK_CLASS = 'sync-break';
@@ -50,12 +50,18 @@
             const keys = ['FirstOpen', TEXT_STORAGE_KEY, 'row-top', 'row-bot'];
             COLUMN_IDS.forEach(n => {
                 keys.push(
-                    'font_' + n, 'font_name_' + n,
+                    'font_' + n, 'font_name_' + n, 'axes_' + n,
                     'inp-f-size-' + n, 'inp-f-tracking-' + n, 'inp-f-lineHeight-' + n,
                     'f-features-' + n, 'f-locl-' + n,
-                    'wght-' + n, 'wdth-' + n, 'opsz-' + n, 'grad-' + n,
                     'HW_' + n
                 );
+                // Also clear any stored axis values
+                const storedAxes = localStorage.getItem('axes_' + n);
+                if (storedAxes) {
+                    try {
+                        JSON.parse(storedAxes).forEach(a => keys.push(a.tag + '-' + n));
+                    } catch (e) { /* ignore */ }
+                }
                 const row = COLUMN_LAYOUT.top.includes(n) ? 'top' : 'bottom';
                 keys.push(row + '-column' + n);
             });
@@ -75,55 +81,108 @@
             tracking: document.querySelector('#inp-f-tracking-' + colNum),
             lineHeight: document.querySelector('#inp-f-lineHeight-' + colNum),
             features: document.querySelector('#f-features-' + colNum),
-            locl: document.querySelector('#f-locl-' + colNum),
-            wght: document.querySelector('#wght-' + colNum),
-            wdth: document.querySelector('#wdth-' + colNum),
-            opsz: document.querySelector('#opsz-' + colNum),
-            grad: document.querySelector('#grad-' + colNum)
+            locl: document.querySelector('#f-locl-' + colNum)
         };
     }
+
+    // --- Variable font axes (dynamic) ---
+
+    function updateColumnAxes(colNum, axes) {
+        columnAxes[colNum] = axes;
+        Storage.set('axes_' + colNum, JSON.stringify(axes));
+
+        const ul = document.querySelector('#form-' + colNum + ' ul');
+        if (!ul) return;
+
+        // Remove existing axis <li> elements (keep the <h2>)
+        ul.querySelectorAll('li').forEach(li => li.remove());
+
+        // Create an input for each axis
+        axes.forEach(axis => {
+            const li = document.createElement('li');
+            const label = document.createElement('label');
+            label.textContent = axis.tag;
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.id = axis.tag + '-' + colNum;
+            input.className = 'filter-numeric-4';
+            input.dataset.axisTag = axis.tag;
+            input.dataset.min = axis.minValue;
+            input.dataset.max = axis.maxValue;
+
+            // Restore from storage or use font default
+            input.value = Storage.get(
+                axis.tag + '-' + colNum,
+                String(axis.defaultValue)
+            );
+
+            li.appendChild(label);
+            li.appendChild(input);
+            ul.appendChild(li);
+
+            // Numeric filtering for dynamically created inputs
+            input.addEventListener('input', function () {
+                this.value = this.value.replace(/[^\d.-]/g, '');
+            });
+
+            // Live update on change
+            input.addEventListener('change', () => applyVariationSettings(colNum));
+            input.addEventListener('input', () => applyVariationSettings(colNum));
+        });
+
+        applyVariationSettings(colNum);
+    }
+
+    function applyVariationSettings(colNum) {
+        const p = document.querySelector('#p-t' + colNum);
+        if (!p) return;
+
+        const inputs = document.querySelectorAll(
+            '#form-' + colNum + ' input[data-axis-tag]'
+        );
+
+        if (inputs.length === 0) {
+            p.style.fontVariationSettings = '';
+            return;
+        }
+
+        const parts = [];
+        inputs.forEach(input => {
+            const tag = input.dataset.axisTag;
+            const val = input.value || input.dataset.min || '0';
+            Storage.set(tag + '-' + colNum, val);
+            parts.push("'" + tag + "' " + val);
+        });
+
+        p.style.fontVariationSettings = parts.join(', ');
+        scheduleSyncLineBreaks();
+    }
+
+    // --- Typography settings (non-axis) ---
 
     function applyColumnSettings(colNum) {
         const el = getColumnElements(colNum);
         if (!el.p) return;
 
-        // Font size
         const size = el.fontSize.value || DEFAULTS.fontSize;
         el.p.style.fontSize = size + 'pt';
         Storage.set('inp-f-size-' + colNum, size);
 
-        // Tracking
         const tracking = el.tracking.value || DEFAULTS.tracking;
         el.p.style.letterSpacing = (tracking * TRACKING_MULTIPLIER) + 'em';
         Storage.set('inp-f-tracking-' + colNum, tracking);
 
-        // Line height
         const lh = el.lineHeight.value || DEFAULTS.lineHeight;
         el.p.style.lineHeight = lh;
         Storage.set('inp-f-lineHeight-' + colNum, lh);
 
-        // OT features
         const features = el.features.value;
         el.p.style.fontFeatureSettings = features || 'normal';
         Storage.set('f-features-' + colNum, features);
 
-        // Language
         const locl = el.locl.value;
         el.p.lang = locl;
         Storage.set('f-locl-' + colNum, locl);
-
-        // Variable font axes
-        const wght = el.wght.value || DEFAULTS.wght;
-        const wdth = el.wdth.value || DEFAULTS.wdth;
-        const opsz = el.opsz.value || DEFAULTS.opsz;
-        const grad = el.grad.value || DEFAULTS.grad;
-        Storage.set('wght-' + colNum, wght);
-        Storage.set('wdth-' + colNum, wdth);
-        Storage.set('opsz-' + colNum, opsz);
-        Storage.set('grad-' + colNum, grad);
-        el.p.style.fontVariationSettings =
-            "'wght' " + wght + ", 'wdth' " + wdth +
-            ", 'opsz' " + opsz + ", 'GRAD' " + grad;
 
         scheduleSyncLineBreaks();
     }
@@ -132,18 +191,12 @@
         const el = getColumnElements(colNum);
         if (!el.p) return;
 
-        // Populate inputs from storage or defaults
         el.fontSize.value = Storage.get('inp-f-size-' + colNum, DEFAULTS.fontSize);
         el.tracking.value = Storage.get('inp-f-tracking-' + colNum, DEFAULTS.tracking);
         el.lineHeight.value = Storage.get('inp-f-lineHeight-' + colNum, DEFAULTS.lineHeight);
         el.features.value = Storage.get('f-features-' + colNum, DEFAULTS.features);
         el.locl.value = Storage.get('f-locl-' + colNum, DEFAULTS.locl);
-        el.wght.value = Storage.get('wght-' + colNum, DEFAULTS.wght);
-        el.wdth.value = Storage.get('wdth-' + colNum, DEFAULTS.wdth);
-        el.opsz.value = Storage.get('opsz-' + colNum, DEFAULTS.opsz);
-        el.grad.value = Storage.get('grad-' + colNum, DEFAULTS.grad);
 
-        // Apply styles to paragraph
         const size = el.fontSize.value || DEFAULTS.fontSize;
         el.p.style.fontSize = size + 'pt';
 
@@ -159,26 +212,23 @@
         const locl = el.locl.value;
         if (locl) el.p.lang = locl;
 
-        const wght = el.wght.value || DEFAULTS.wght;
-        const wdth = el.wdth.value || DEFAULTS.wdth;
-        const opsz = el.opsz.value || DEFAULTS.opsz;
-        const grad = el.grad.value || DEFAULTS.grad;
-        el.p.style.fontVariationSettings =
-            "'wght' " + wght + ", 'wdth' " + wdth +
-            ", 'opsz' " + opsz + ", 'GRAD' " + grad;
-
-        // Attach change listeners to all settings inputs
-        const inputs = [
-            el.fontSize, el.tracking, el.lineHeight,
-            el.features, el.locl,
-            el.wght, el.wdth, el.opsz, el.grad
-        ];
+        // Attach change listeners to typography settings
+        const inputs = [el.fontSize, el.tracking, el.lineHeight, el.features, el.locl];
         inputs.forEach(input => {
             if (input) {
                 input.addEventListener('change', () => applyColumnSettings(colNum));
                 input.addEventListener('input', () => applyColumnSettings(colNum));
             }
         });
+
+        // Restore axes from localStorage if previously saved
+        const storedAxes = Storage.get('axes_' + colNum);
+        if (storedAxes) {
+            try {
+                const axes = JSON.parse(storedAxes);
+                updateColumnAxes(colNum, axes);
+            } catch (e) { /* ignore bad data */ }
+        }
     }
 
     // =========================================================================
@@ -193,17 +243,52 @@
         document.head.appendChild(style);
     }
 
+    function parseFontAxes(arrayBuffer) {
+        if (typeof opentype === 'undefined') return [];
+        try {
+            const font = opentype.parse(arrayBuffer);
+            if (font.tables.fvar && font.tables.fvar.axes) {
+                return font.tables.fvar.axes.map(a => ({
+                    tag: a.tag,
+                    minValue: a.minValue,
+                    maxValue: a.maxValue,
+                    defaultValue: a.defaultValue
+                }));
+            }
+        } catch (e) {
+            console.warn('Could not parse font axes:', e);
+        }
+        return [];
+    }
+
+    function dataUrlToArrayBuffer(dataUrl) {
+        const base64 = dataUrl.split(',')[1];
+        const binary = atob(base64);
+        const buf = new ArrayBuffer(binary.length);
+        const view = new Uint8Array(buf);
+        for (let i = 0; i < binary.length; i++) {
+            view[i] = binary.charCodeAt(i);
+        }
+        return buf;
+    }
+
     function loadFontFile(file, colNum) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
+        // Read as both DataURL (for @font-face) and ArrayBuffer (for axis parsing)
+        const readerUrl = new FileReader();
+        readerUrl.onload = function (e) {
             const dataUrl = e.target.result;
             const fontName = "'Col_font_" + colNum + "'";
             Storage.set('font_' + colNum, dataUrl);
             Storage.set('font_name_' + colNum, file.name);
             loadFontFace(fontName, "'" + dataUrl + "'");
             document.querySelector('#p-t' + colNum).style.fontFamily = fontName;
+
+            // Parse axes from the same file
+            const arrayBuffer = dataUrlToArrayBuffer(dataUrl);
+            const axes = parseFontAxes(arrayBuffer);
+            updateColumnAxes(colNum, axes);
         };
-        reader.readAsDataURL(file);
+        readerUrl.readAsDataURL(file);
     }
 
     function initFontLoading() {
@@ -227,6 +312,15 @@
                 loadFontFace(fontName, "'" + stored + "'");
                 const p = document.querySelector('#p-t' + colNum);
                 if (p) p.style.fontFamily = fontName;
+
+                // Parse axes if not already cached in localStorage
+                if (!Storage.get('axes_' + colNum)) {
+                    try {
+                        const buf = dataUrlToArrayBuffer(stored);
+                        const axes = parseFontAxes(buf);
+                        updateColumnAxes(colNum, axes);
+                    } catch (e) { /* ignore */ }
+                }
             }
 
             // Drag-and-drop
