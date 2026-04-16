@@ -52,8 +52,7 @@
                 keys.push(
                     'font_' + n, 'font_name_' + n, 'axes_' + n,
                     'inp-f-size-' + n, 'inp-f-tracking-' + n, 'inp-f-lineHeight-' + n,
-                    'f-features-' + n, 'f-locl-' + n,
-                    'HW_' + n
+                    'f-features-' + n, 'f-locl-' + n
                 );
                 // Also clear any stored axis values
                 const storedAxes = localStorage.getItem('axes_' + n);
@@ -452,60 +451,6 @@
         });
     }
 
-    // Hard wrap
-    function hardWrapText(maxWidth) {
-        if (!maxWidth || maxWidth <= 0) return;
-
-        const firstP = document.querySelector('#p-t1');
-        if (!firstP) return;
-
-        // Get clean text (strip sync breaks and HTML)
-        const text = firstP.textContent;
-        const lines = text.split('\n');
-        const wrapped = [];
-
-        lines.forEach(line => {
-            if (line.length <= maxWidth) {
-                wrapped.push(line);
-                return;
-            }
-            let remaining = line;
-            while (remaining.length > maxWidth) {
-                let breakPos = -1;
-                for (let i = maxWidth; i >= 0; i--) {
-                    if (/\s/.test(remaining[i])) {
-                        breakPos = i;
-                        break;
-                    }
-                }
-                if (breakPos <= 0) {
-                    wrapped.push(remaining.slice(0, maxWidth));
-                    remaining = remaining.slice(maxWidth);
-                } else {
-                    wrapped.push(remaining.slice(0, breakPos));
-                    remaining = remaining.slice(breakPos + 1);
-                }
-            }
-            if (remaining.length > 0) wrapped.push(remaining);
-        });
-
-        const result = wrapped.join('<br>');
-        getAllParagraphs().forEach(p => {
-            p.innerHTML = result;
-        });
-        Storage.set(TEXT_STORAGE_KEY, result);
-        scheduleSyncLineBreaks();
-    }
-
-    function initHardWrap() {
-        const input = document.querySelector('#hardWrapInputAll');
-        if (input) {
-            input.addEventListener('change', function () {
-                hardWrapText(parseInt(this.value, 10));
-            });
-        }
-    }
-
     // Text file import
     function initTextImport() {
         const input = document.querySelector('#inputfile');
@@ -634,6 +579,55 @@
         });
     }
 
+    // Convert a cursor position to a flat character offset within an element,
+    // skipping over sync-break <br> elements.
+    function saveCursorOffset(el) {
+        const sel = window.getSelection();
+        if (!sel.rangeCount) return null;
+        const range = sel.getRangeAt(0);
+        if (!el.contains(range.startContainer)) return null;
+
+        const pre = document.createRange();
+        pre.setStart(el, 0);
+        pre.setEnd(range.startContainer, range.startOffset);
+
+        // Walk the range and count only text characters (ignore sync breaks)
+        let offset = 0;
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_ALL);
+        let node;
+        while ((node = walker.nextNode())) {
+            if (node === range.startContainer) {
+                offset += range.startOffset;
+                break;
+            }
+            if (node.nodeType === 3) {
+                offset += node.length;
+            }
+            // Skip sync-break <br> — don't count them
+        }
+        return offset;
+    }
+
+    // Restore cursor to a flat character offset, skipping sync-break <br>s
+    function restoreCursorOffset(el, targetOffset) {
+        if (targetOffset === null) return;
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+        let counted = 0;
+        let node;
+        while ((node = walker.nextNode())) {
+            if (counted + node.length >= targetOffset) {
+                const sel = window.getSelection();
+                const range = document.createRange();
+                range.setStart(node, targetOffset - counted);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+                return;
+            }
+            counted += node.length;
+        }
+    }
+
     function syncLineBreaks() {
         if (_syncing) return;
         _syncing = true;
@@ -643,7 +637,13 @@
             const columns = getVisibleColumns();
             if (columns.length < 2) return;
 
+            // Save cursor in focused column before modifying DOM
             const focusedP = document.activeElement;
+            let cursorOffset = null;
+            const focusedIdx = columns.indexOf(focusedP);
+            if (focusedIdx >= 0) {
+                cursorOffset = saveCursorOffset(focusedP);
+            }
 
             columns.forEach(stripSyncBreaks);
             void columns[0].offsetHeight;
@@ -661,11 +661,17 @@
             if (breakHash === _lastBreakHash) return;
             _lastBreakHash = breakHash;
 
+            // Apply breaks to ALL columns except the reference (it already wraps naturally)
             columns.forEach((col, i) => {
-                if (col !== focusedP && i !== maxIdx) {
+                if (i !== maxIdx) {
                     applyBreaks(col, allBreaks[maxIdx]);
                 }
             });
+
+            // Restore cursor in focused column
+            if (focusedIdx >= 0 && cursorOffset !== null) {
+                restoreCursorOffset(focusedP, cursorOffset);
+            }
         } finally {
             _syncing = false;
             Promise.resolve().then(resumeObserver);
@@ -868,7 +874,6 @@
         initPasteHandlers();
         initScrollSync();
         initTextImport();
-        initHardWrap();
         initNumericInputFilters();
         initSettingsPanel();
         initClearData();
