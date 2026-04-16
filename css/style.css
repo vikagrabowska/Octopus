@@ -163,7 +163,7 @@ nav ul li:hover {
 }
 #main-content .wrapper .col .col-p-wrapp p {
   grid-column: 0.8;
-  word-break: break-all;
+  overflow-wrap: break-word;
   padding: 0 0.2em;
   padding-top: 0.2em;
   color: rgb(46, 41, 54);
