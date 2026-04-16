@@ -36,6 +36,57 @@
     // 2. STORAGE
     // =========================================================================
 
+    // IndexedDB wrapper for large font data (localStorage has ~5MB limit)
+    const FontDB = {
+        _dbName: 'OctopusFonts',
+        _storeName: 'fonts',
+        _dbPromise: null,
+
+        _open() {
+            if (!this._dbPromise) {
+                this._dbPromise = new Promise((resolve, reject) => {
+                    const req = indexedDB.open(this._dbName, 1);
+                    req.onupgradeneeded = () => {
+                        req.result.createObjectStore(this._storeName);
+                    };
+                    req.onsuccess = () => resolve(req.result);
+                    req.onerror = () => reject(req.error);
+                });
+            }
+            return this._dbPromise;
+        },
+
+        async set(key, value) {
+            const db = await this._open();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(this._storeName, 'readwrite');
+                tx.objectStore(this._storeName).put(value, key);
+                tx.oncomplete = () => resolve();
+                tx.onerror = () => reject(tx.error);
+            });
+        },
+
+        async get(key) {
+            const db = await this._open();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(this._storeName, 'readonly');
+                const req = tx.objectStore(this._storeName).get(key);
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            });
+        },
+
+        async clear() {
+            const db = await this._open();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(this._storeName, 'readwrite');
+                tx.objectStore(this._storeName).clear();
+                tx.oncomplete = () => resolve();
+                tx.onerror = () => reject(tx.error);
+            });
+        }
+    };
+
     const Storage = {
         get(key, defaultValue) {
             const val = localStorage.getItem(key);
@@ -50,7 +101,7 @@
             const keys = ['FirstOpen', TEXT_STORAGE_KEY, 'row-top', 'row-bot'];
             COLUMN_IDS.forEach(n => {
                 keys.push(
-                    'font_' + n, 'font_name_' + n, 'axes_' + n,
+                    'font_name_' + n, 'axes_' + n,
                     'inp-f-size-' + n, 'inp-f-tracking-' + n, 'inp-f-lineHeight-' + n,
                     'f-features-' + n, 'f-locl-' + n
                 );
@@ -65,6 +116,7 @@
                 keys.push(row + '-column' + n);
             });
             keys.forEach(k => localStorage.removeItem(k));
+            FontDB.clear();
             window.location.reload();
         }
     };
@@ -277,7 +329,7 @@
         readerUrl.onload = function (e) {
             const dataUrl = e.target.result;
             const fontName = "'Col_font_" + colNum + "'";
-            Storage.set('font_' + colNum, dataUrl);
+            FontDB.set('font_' + colNum, dataUrl);
             Storage.set('font_name_' + colNum, file.name);
             loadFontFace(fontName, "'" + dataUrl + "'");
             document.querySelector('#p-t' + colNum).style.fontFamily = fontName;
@@ -304,23 +356,24 @@
                 });
             }
 
-            // Restore font from localStorage
-            const stored = Storage.get('font_' + colNum);
-            if (stored) {
-                const fontName = "'Col_font_" + colNum + "'";
-                loadFontFace(fontName, "'" + stored + "'");
-                const p = document.querySelector('#p-t' + colNum);
-                if (p) p.style.fontFamily = fontName;
+            // Restore font from IndexedDB
+            FontDB.get('font_' + colNum).then(stored => {
+                if (stored) {
+                    const fontName = "'Col_font_" + colNum + "'";
+                    loadFontFace(fontName, "'" + stored + "'");
+                    const p = document.querySelector('#p-t' + colNum);
+                    if (p) p.style.fontFamily = fontName;
 
-                // Parse axes if not already cached in localStorage
-                if (!Storage.get('axes_' + colNum)) {
-                    try {
-                        const buf = dataUrlToArrayBuffer(stored);
-                        const axes = parseFontAxes(buf);
-                        updateColumnAxes(colNum, axes);
-                    } catch (e) { /* ignore */ }
+                    // Parse axes if not already cached in localStorage
+                    if (!Storage.get('axes_' + colNum)) {
+                        try {
+                            const buf = dataUrlToArrayBuffer(stored);
+                            const axes = parseFontAxes(buf);
+                            updateColumnAxes(colNum, axes);
+                        } catch (e) { /* ignore */ }
+                    }
                 }
-            }
+            });
 
             // Drag-and-drop
             const p = document.querySelector('#p-t' + colNum);
@@ -387,9 +440,6 @@
         Storage.set(TEXT_STORAGE_KEY, html);
         _textSyncing = false;
 
-        // Reset break hash so the next sync re-applies breaks
-        // (syncText wiped them from all non-focused columns via innerHTML)
-        _lastBreakHash = '';
         scheduleSyncLineBreaks();
     }
 
@@ -478,7 +528,6 @@
     let _syncing = false;
     let _observer = null;
     let _observedElements = [];
-    let _lastBreakHash = '';
 
     function getVisibleColumns() {
         const cols = [];
@@ -656,10 +705,6 @@
             }
 
             if (allBreaks[maxIdx].length === 0) return;
-
-            const breakHash = JSON.stringify(allBreaks[maxIdx]);
-            if (breakHash === _lastBreakHash) return;
-            _lastBreakHash = breakHash;
 
             // Apply breaks to ALL columns except the reference (it already wraps naturally)
             columns.forEach((col, i) => {
