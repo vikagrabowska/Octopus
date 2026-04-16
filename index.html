@@ -49,6 +49,12 @@
             pointer-events: none;
             margin-right: 18px;
         }
+
+        .col.drag-over {
+            outline: 3px dashed #4512eb;
+            outline-offset: -3px;
+            background-color: rgba(69, 18, 235, 0.05);
+        }
     </style>
 </head>
 
@@ -334,8 +340,7 @@
                 <div id="waring-info-content">
                     <div id="warring-wrapp-el">
                         <span class="warring-pict"></span>
-                        <p>Font files are only loaded from the "./font" folder within the program directory.<br> Ensure
-                            all necessary fonts are placed in this folder for proper loading and usage.</p>
+                        <p>Load fonts by clicking "Font" buttons or by dragging and dropping font files (.ttf, .otf, .woff, .woff2) onto any column.</p>
                     </div>
 
                     <input id="resetStorage" type="button" value="Clear data" onclick="resetSorageData()"></input>
@@ -760,7 +765,7 @@
                 // Allow only numeric digits, backspace key, and a single leading "-"
                 if (!/^\d$/.test(event.key) && event.key !== 'Backspace' && (event.key !== '-' || input.value.includes('-') || input.selectionStart !== 0)) {
                     event.preventDefault(); // Prevent entering non-numeric characters or additional "-"
-                }ą
+                }
             });
         });
 
@@ -788,6 +793,7 @@
             "FirstOpen",
             "txt",
             "font_1", "font_2", "font_3", "font_4", "font_5", "font_6", "font_7", "font_8",
+            "font_name_1", "font_name_2", "font_name_3", "font_name_4", "font_name_5", "font_name_6", "font_name_7", "font_name_8",
             "f-locl-1", "f-locl-2", "f-locl-3", "f-locl-4", "f-locl-5", "f-locl-6", "f-locl-7", "f-locl-8",
             "inp-f-size-1", "inp-f-size-2", "inp-f-size-3", "inp-f-size-4", "inp-f-size-5", "inp-f-size-6", "inp-f-size-7", "inp-f-size-8",
             "inp-f-lineHeight-1", "inp-f-lineHeight-2", "inp-f-lineHeight-3", "inp-f-lineHeight-4", "inp-f-lineHeight-5", "inp-f-lineHeight-6", "inp-f-lineHeight-7", "inp-f-lineHeight-8",
