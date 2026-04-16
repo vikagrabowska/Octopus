@@ -99,6 +99,7 @@ nav ul li:hover {
   display: grid;
   column-gap: 10px;
   grid-column: 1;
+  grid-auto-columns: 1fr;
 }
 #main-content .wrapper .col {
   display: grid;
