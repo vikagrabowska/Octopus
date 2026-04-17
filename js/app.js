@@ -563,29 +563,12 @@ function initTextImport() {
     });
 }
 
-// Sample text dropdown
-var SAMPLE_TEXTS = [
-    { label: 'Pangrams', file: 'texts/pangrams.txt' },
-    { label: 'Kafka', file: 'texts/kafka.txt' },
-    { label: 'Arabic', file: 'texts/arabic.txt' },
-    { label: 'Chinese', file: 'texts/chinese.txt' },
-    { label: 'Kerning', file: 'texts/kerning.txt' },
-    { label: 'Spacing', file: 'texts/spacing.txt' }
-];
-
+// Sample text dropdown. Texts are written into texts/<category>/*.txt at deploy
+// time (from SorkinType/octo-text) and indexed in texts/index.json.
 function initTextSelect() {
     var select = document.querySelector('#textSelect');
     if (!select) return;
 
-    SAMPLE_TEXTS.forEach(function (item) {
-        var option = document.createElement('option');
-        option.value = item.file;
-        option.textContent = item.label;
-        select.appendChild(option);
-    });
-
-    // Remote sample texts are written into texts/<category>/*.txt at deploy time
-    // and indexed in texts/index.json. Append them as <optgroup> sections.
     fetch('texts/index.json')
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (manifest) {
@@ -602,7 +585,7 @@ function initTextSelect() {
                 select.appendChild(group);
             });
         })
-        .catch(function () { /* no manifest locally; built-ins only */ });
+        .catch(function () { /* no manifest available */ });
 
     select.addEventListener('change', function () {
         if (!this.value) return;
