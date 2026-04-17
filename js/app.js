@@ -488,6 +488,17 @@ function initScrollSync() {
     });
 }
 
+function loadTextIntoColumns(text) {
+    const html = text.replace(/&/g, '&amp;')
+                     .replace(/</g, '&lt;')
+                     .replace(/>/g, '&gt;')
+                     .replace(/\n/g, '<br>');
+    getAllParagraphs().forEach(p => {
+        p.innerHTML = html;
+    });
+    Storage.set(TEXT_STORAGE_KEY, text);
+}
+
 // Text file import
 function initTextImport() {
     const input = document.querySelector('#inputfile');
@@ -496,17 +507,38 @@ function initTextImport() {
         if (e.target.files.length === 0) return;
         const reader = new FileReader();
         reader.onload = function (ev) {
-            const text = ev.target.result;
-            const html = text.replace(/&/g, '&amp;')
-                             .replace(/</g, '&lt;')
-                             .replace(/>/g, '&gt;')
-                             .replace(/\n/g, '<br>');
-            getAllParagraphs().forEach(p => {
-                p.innerHTML = html;
-            });
-            Storage.set(TEXT_STORAGE_KEY, text);
-                };
+            loadTextIntoColumns(ev.target.result);
+        };
         reader.readAsText(e.target.files[0]);
+    });
+}
+
+// Sample text dropdown
+var SAMPLE_TEXTS = [
+    { label: 'Pangrams', file: 'texts/pangrams.txt' },
+    { label: 'Kafka', file: 'texts/kafka.txt' },
+    { label: 'Arabic', file: 'texts/arabic.txt' },
+    { label: 'Chinese', file: 'texts/chinese.txt' },
+    { label: 'Kerning', file: 'texts/kerning.txt' },
+    { label: 'Spacing', file: 'texts/spacing.txt' }
+];
+
+function initTextSelect() {
+    var select = document.querySelector('#textSelect');
+    if (!select) return;
+
+    SAMPLE_TEXTS.forEach(function (item) {
+        var option = document.createElement('option');
+        option.value = item.file;
+        option.textContent = item.label;
+        select.appendChild(option);
+    });
+
+    select.addEventListener('change', function () {
+        if (!this.value) return;
+        fetch(this.value)
+            .then(function (r) { return r.text(); })
+            .then(function (text) { loadTextIntoColumns(text); });
     });
 }
 
@@ -739,6 +771,7 @@ function init() {
     initPasteHandlers();
     initScrollSync();
     initTextImport();
+    initTextSelect();
     initNumericInputFilters();
     initSettingsPanel();
     initClearData();
