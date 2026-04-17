@@ -156,10 +156,12 @@ nav ul li:hover {
 #main-content .wrapper .col .col-scrl-6,
 #main-content .wrapper .col .col-scrl-7,
 #main-content .wrapper .col .col-scrl-8 {
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 #main-content .wrapper .col .col-p-wrapp {
   grid-column: 1;
+  min-width: 0;
 }
 #main-content .wrapper .col .col-p-wrapp p {
   grid-column: 0.8;

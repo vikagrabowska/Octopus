@@ -1,7 +1,8 @@
 // Octopus Font Comparison App
 // Single-file rewrite — replaces 12 JS files + inline scripts
 
-import { prepareWithSegments, layoutWithLines, clearCache } from 'https://esm.sh/@chenglou/pretext@0.0.5';
+(function () {
+'use strict';
 
 // =========================================================================
 // 1. CONFIGURATION
@@ -27,7 +28,6 @@ const DEFAULTS = {
 const columnAxes = {};
 
 const TRACKING_MULTIPLIER = 0.001;
-const SYNC_BREAK_CLASS = 'sync-break';
 const TEXT_STORAGE_KEY = 'txt';
 const APP_VERSION = 'V95.3';
 
@@ -97,7 +97,7 @@ const Storage = {
     },
 
     clearAll() {
-        const keys = ['FirstOpen', TEXT_STORAGE_KEY, 'row-top', 'row-bot'];
+        const keys = ['FirstOpen', TEXT_STORAGE_KEY, 'HW_all', 'row-top', 'row-bot'];
         COLUMN_IDS.forEach(n => {
             keys.push(
                 'font_name_' + n, 'axes_' + n,
@@ -205,7 +205,6 @@ function applyVariationSettings(colNum) {
     });
 
     p.style.fontVariationSettings = parts.join(', ');
-    scheduleSyncLineBreaks();
 }
 
 // --- Typography settings (non-axis) ---
@@ -234,7 +233,6 @@ function applyColumnSettings(colNum) {
     el.p.lang = locl;
     Storage.set('f-locl-' + colNum, locl);
 
-    scheduleSyncLineBreaks();
 }
 
 function initColumnSettings(colNum) {
@@ -422,7 +420,6 @@ function syncText(sourceElement) {
     _textSyncing = true;
 
     let html = sourceElement.innerHTML
-        .replace(/<br\s+class="sync-break"\s*\/?>/gi, '')
         .replace(/<div>/g, '\n').replace(/<\/div>/g, '');
 
     getAllParagraphs().forEach(p => {
@@ -443,7 +440,6 @@ function syncText(sourceElement) {
     const sourceWrapper = sourceElement.closest('.col-p-wrapp');
     if (sourceWrapper) syncScrollFrom(sourceWrapper);
 
-    scheduleSyncLineBreaks();
 }
 
 function loadTextFromStorage() {
@@ -528,300 +524,74 @@ function initTextImport() {
                 p.innerHTML = html;
             });
             Storage.set(TEXT_STORAGE_KEY, text);
-            scheduleSyncLineBreaks();
-        };
+                };
         reader.readAsText(e.target.files[0]);
     });
 }
 
 // =========================================================================
-// 6. SYNCHRONIZED LINE BREAKS (via pretext)
+// 6. HARD WRAP
 // =========================================================================
 
-let _syncTimer = null;
-let _syncing = false;
-let _observer = null;
-let _observedElements = [];
-
-function getVisibleColumns() {
-    const cols = [];
-    COLUMN_IDS.forEach(n => {
-        const p = document.querySelector('#p-t' + n);
-        if (!p) return;
-        const col = p.closest('.col');
-        if (col && col.style.display !== 'none') {
-            cols.push(p);
-        }
-    });
-    return cols;
-}
-
-function getColNum(pElement) {
-    return parseInt(pElement.id.replace('p-t', ''), 10);
-}
-
-function getColumnFontCSS(colNum) {
-    const p = document.querySelector('#p-t' + colNum);
-    if (!p) return '';
-    return window.getComputedStyle(p).font;
-}
-
-function getColumnWidthPx(colNum) {
-    const p = document.querySelector('#p-t' + colNum);
-    return p ? p.clientWidth : 0;
-}
-
-function getColumnLineHeightPx(colNum) {
-    const p = document.querySelector('#p-t' + colNum);
-    if (!p) return 0;
-    const lh = window.getComputedStyle(p).lineHeight;
-    if (lh === 'normal') {
-        return parseFloat(window.getComputedStyle(p).fontSize) * 1.2;
-    }
-    return parseFloat(lh);
-}
-
-// Extract plain text from a paragraph element, stripping sync breaks
-// and converting real <br> to \n
-function getPlainText(el) {
-    const clone = el.cloneNode(true);
-    clone.querySelectorAll('br.' + SYNC_BREAK_CLASS).forEach(br => br.remove());
-    clone.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
-    return clone.textContent;
-}
-
-function stripSyncBreaks(el) {
-    const brs = el.querySelectorAll('br.' + SYNC_BREAK_CLASS);
-    for (let i = brs.length - 1; i >= 0; i--) {
-        brs[i].parentNode.removeChild(brs[i]);
-    }
-    el.normalize();
-}
-
-// Compute character offsets where soft wraps occur within a single paragraph
-function computeParagraphBreaks(paragraphText, fontCSS, widthPx, lineHeightPx) {
-    if (!paragraphText) return [];
-    const prepared = prepareWithSegments(paragraphText, fontCSS);
-    const result = layoutWithLines(prepared, widthPx, lineHeightPx);
-    const breaks = [];
-    let offset = 0;
-    for (let i = 0; i < result.lines.length - 1; i++) {
-        offset += result.lines[i].text.length;
-        breaks.push(offset);
-    }
-    return breaks;
-}
-
-// Compute all break offsets (in the full text) for a given column
-function computeColumnBreaks(fullText, colNum) {
-    const fontCSS = getColumnFontCSS(colNum);
-    const widthPx = getColumnWidthPx(colNum);
-    const lhPx = getColumnLineHeightPx(colNum);
-    if (!fontCSS || widthPx <= 0 || lhPx <= 0) return [];
-
-    const paragraphs = fullText.split('\n');
-    const breaks = [];
-    let globalOffset = 0;
-    for (const para of paragraphs) {
-        if (para.length > 0) {
-            const paraBreaks = computeParagraphBreaks(para, fontCSS, widthPx, lhPx);
-            paraBreaks.forEach(b => breaks.push(globalOffset + b));
-        }
-        globalOffset += para.length + 1; // +1 for the \n
-    }
-    return breaks;
-}
-
-// Build HTML from plain text, inserting <br class="sync-break"> at given offsets
-function buildHTMLWithSyncBreaks(fullText, breakOffsets) {
-    const breakSet = new Set(breakOffsets);
-    let html = '';
-    for (let i = 0; i < fullText.length; i++) {
-        if (breakSet.has(i)) {
-            html += '<br class="' + SYNC_BREAK_CLASS + '">';
-        }
-        const ch = fullText[i];
-        if (ch === '\n') {
-            html += '<br>';
-        } else if (ch === '&') {
-            html += '&amp;';
-        } else if (ch === '<') {
-            html += '&lt;';
-        } else if (ch === '>') {
-            html += '&gt;';
-        } else {
-            html += ch;
-        }
-    }
-    return html;
-}
-
-function pauseObserver() {
-    if (_observer) _observer.disconnect();
-}
-
-function resumeObserver() {
-    if (!_observer) return;
-    _observedElements.forEach(p => {
-        _observer.observe(p, {
-            childList: true,
-            characterData: true,
-            subtree: true,
-            attributes: true,
-            attributeFilter: ['style']
-        });
-    });
-}
-
-// Cursor save/restore — counts flat character offset, skipping sync-break <br>s
-
-function getTextNodes(el) {
-    const nodes = [];
-    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-    let node;
-    while ((node = walker.nextNode())) {
-        nodes.push(node);
-    }
-    return nodes;
-}
-
-function saveCursorOffset(el) {
-    const sel = window.getSelection();
-    if (!sel.rangeCount) return null;
-    const range = sel.getRangeAt(0);
-    if (!el.contains(range.startContainer)) return null;
-
-    let offset = 0;
-    const walker = document.createTreeWalker(el, NodeFilter.SHOW_ALL);
-    let node;
-    while ((node = walker.nextNode())) {
-        if (node === range.startContainer) {
-            offset += range.startOffset;
-            break;
-        }
-        if (node.nodeType === 3) {
-            offset += node.length;
-        }
-    }
-    return offset;
-}
-
-function restoreCursorOffset(el, targetOffset) {
-    if (targetOffset === null) return;
-    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-    let counted = 0;
-    let node;
-    while ((node = walker.nextNode())) {
-        if (counted + node.length >= targetOffset) {
-            const sel = window.getSelection();
-            const range = document.createRange();
-            range.setStart(node, targetOffset - counted);
-            range.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(range);
-            return;
-        }
-        counted += node.length;
-    }
-}
-
-function syncLineBreaks() {
-    if (_syncing) return;
-    _syncing = true;
-    pauseObserver();
-
-    try {
-        const columns = getVisibleColumns();
-        if (columns.length < 2) return;
-
-        // Save cursor in focused column before modifying DOM
-        const focusedP = document.activeElement;
-        let cursorOffset = null;
-        const focusedIdx = columns.indexOf(focusedP);
-        if (focusedIdx >= 0) {
-            cursorOffset = saveCursorOffset(focusedP);
-        }
-
-        // Get plain text (same across all columns)
-        const text = getPlainText(columns[0]);
-        if (!text) return;
-
-        // Compute breaks for each column, pick the one with the most
-        let refBreaks = [];
-        let refIdx = 0;
-        columns.forEach((col, i) => {
-            const colNum = getColNum(col);
-            const breaks = computeColumnBreaks(text, colNum);
-            if (breaks.length > refBreaks.length) {
-                refBreaks = breaks;
-                refIdx = i;
+// Word-wrap a string at maxWidth characters, preferring word boundaries
+function wordWrap(str, maxWidth) {
+    var result = '';
+    while (str.length > maxWidth) {
+        // Look backwards from maxWidth for a space to break at
+        var found = false;
+        for (var i = maxWidth - 1; i >= 0; i--) {
+            if (/\s/.test(str.charAt(i))) {
+                result += str.slice(0, i + 1) + '<br>';
+                str = str.slice(i + 1);
+                found = true;
+                break;
             }
-        });
-
-        if (refBreaks.length === 0) {
-            // No breaks needed — just strip any old sync breaks
-            columns.forEach(stripSyncBreaks);
-            return;
         }
-
-        // Build HTML with sync breaks
-        const syncedHTML = buildHTMLWithSyncBreaks(text, refBreaks);
-        // Reference column gets clean HTML (wraps naturally at those positions)
-        const cleanHTML = buildHTMLWithSyncBreaks(text, []);
-
-        columns.forEach((col, i) => {
-            col.innerHTML = (i === refIdx) ? cleanHTML : syncedHTML;
-        });
-
-        // Restore cursor in focused column
-        if (focusedIdx >= 0 && cursorOffset !== null) {
-            restoreCursorOffset(focusedP, cursorOffset);
+        // No space found — force break at maxWidth
+        if (!found) {
+            result += str.slice(0, maxWidth) + '<br>';
+            str = str.slice(maxWidth);
         }
-
-        // Re-sync scroll positions after DOM changes
-        const focusedWrapper = focusedP && focusedP.closest('.col-p-wrapp');
-        if (focusedWrapper) {
-            syncScrollFrom(focusedWrapper);
-        }
-    } finally {
-        _syncing = false;
-        Promise.resolve().then(resumeObserver);
     }
+    return result + str;
 }
 
-function scheduleSyncLineBreaks() {
-    clearTimeout(_syncTimer);
-    _syncTimer = setTimeout(syncLineBreaks, 200);
+function applyHardWrap() {
+    var input = document.querySelector('#hardWrapInput');
+    if (!input) return;
+    var n = parseInt(input.value, 10);
+    if (!n || n <= 0) return;
+
+    // Get the raw text from the first paragraph
+    var sourceP = document.querySelector('#p-t1');
+    if (!sourceP) return;
+    var text = sourceP.textContent;
+
+    var wrapped = wordWrap(text, n);
+
+    // Apply to all paragraphs and save
+    getAllParagraphs().forEach(function (p) {
+        p.innerHTML = wrapped;
+    });
+    Storage.set(TEXT_STORAGE_KEY, wrapped);
+    Storage.set('HW_all', input.value);
 }
 
-function initLineBreakSync() {
-    _observer = new MutationObserver(function () {
-        if (_syncing || _textSyncing) return;
-        scheduleSyncLineBreaks();
-    });
+function initHardWrap() {
+    var input = document.querySelector('#hardWrapInput');
+    if (!input) return;
 
-    COLUMN_IDS.forEach(n => {
-        const p = document.querySelector('#p-t' + n);
-        if (p) {
-            _observedElements.push(p);
-            _observer.observe(p, {
-                childList: true,
-                characterData: true,
-                subtree: true,
-                attributes: true,
-                attributeFilter: ['style']
-            });
-            p.addEventListener('blur', scheduleSyncLineBreaks);
+    // Restore saved value
+    var saved = Storage.get('HW_all');
+    if (saved) input.value = saved;
+
+    input.addEventListener('change', applyHardWrap);
+    input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            applyHardWrap();
         }
     });
-
-    window.addEventListener('resize', scheduleSyncLineBreaks);
-    if (document.fonts && document.fonts.addEventListener) {
-        document.fonts.addEventListener('loadingdone', function () {
-            clearCache(); // invalidate pretext's canvas measurement cache
-            scheduleSyncLineBreaks();
-        });
-    }
 }
 
 // =========================================================================
@@ -869,7 +639,6 @@ window.toggleColumn = function (colNum) {
 
     updateRowVisibility('top', '#row-top');
     updateRowVisibility('bottom', '#row-bot');
-    scheduleSyncLineBreaks();
 };
 
 function initColumnVisibility() {
@@ -992,11 +761,11 @@ function init() {
     initSettingsPanel();
     initClearData();
     initHelloPopup();
-    initLineBreakSync();
-    setTimeout(scheduleSyncLineBreaks, 500);
+    initHardWrap();
 }
 
 document.addEventListener('DOMContentLoaded', init);
 
 // Expose for external use
-window.scheduleSyncLineBreaks = scheduleSyncLineBreaks;
+
+})();
