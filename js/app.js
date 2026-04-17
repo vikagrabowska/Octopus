@@ -29,7 +29,7 @@ const columnAxes = {};
 
 const TRACKING_MULTIPLIER = 0.001;
 const TEXT_STORAGE_KEY = 'txt';
-const APP_VERSION = 'V1.0.0';
+
 
 // =========================================================================
 // 2. STORAGE
@@ -97,7 +97,7 @@ const Storage = {
     },
 
     clearAll() {
-        const keys = ['FirstOpen', TEXT_STORAGE_KEY, 'HW_all', 'row-top', 'row-bot',
+        const keys = [TEXT_STORAGE_KEY, 'HW_all', 'row-top', 'row-bot',
             'inp-f-size', 'inp-f-tracking', 'inp-f-lineHeight', 'f-features', 'f-locl'];
         COLUMN_IDS.forEach(n => {
             keys.push('font_name_' + n, 'axes_' + n);
@@ -738,25 +738,6 @@ function initClearData() {
     }
 }
 
-function initHelloPopup() {
-    const popup = document.querySelector('#hello-octopus');
-    if (!popup) return;
-
-    const stored = Storage.get('FirstOpen');
-    if (stored === APP_VERSION) {
-        popup.style.display = 'none';
-        return;
-    }
-    if (stored !== null && stored !== APP_VERSION) {
-        localStorage.removeItem('FirstOpen');
-    }
-
-    popup.addEventListener('click', function () {
-        popup.style.display = 'none';
-        Storage.set('FirstOpen', APP_VERSION);
-    });
-}
-
 // =========================================================================
 // 9. INITIALIZATION
 // =========================================================================
@@ -775,7 +756,7 @@ function init() {
     initNumericInputFilters();
     initSettingsPanel();
     initClearData();
-    initHelloPopup();
+
     initHardWrap();
 }
 
