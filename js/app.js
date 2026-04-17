@@ -29,7 +29,7 @@ const columnAxes = {};
 
 const TRACKING_MULTIPLIER = 0.001;
 const TEXT_STORAGE_KEY = 'txt';
-const APP_VERSION = 'V95.3';
+const APP_VERSION = 'V1.0.0';
 
 // =========================================================================
 // 2. STORAGE
