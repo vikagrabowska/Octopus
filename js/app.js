@@ -97,13 +97,10 @@ const Storage = {
     },
 
     clearAll() {
-        const keys = ['FirstOpen', TEXT_STORAGE_KEY, 'HW_all', 'row-top', 'row-bot'];
+        const keys = ['FirstOpen', TEXT_STORAGE_KEY, 'HW_all', 'row-top', 'row-bot',
+            'inp-f-size', 'inp-f-tracking', 'inp-f-lineHeight', 'f-features', 'f-locl'];
         COLUMN_IDS.forEach(n => {
-            keys.push(
-                'font_name_' + n, 'axes_' + n,
-                'inp-f-size-' + n, 'inp-f-tracking-' + n, 'inp-f-lineHeight-' + n,
-                'f-features-' + n, 'f-locl-' + n
-            );
+            keys.push('font_name_' + n, 'axes_' + n);
             // Also clear any stored axis values
             const storedAxes = localStorage.getItem('axes_' + n);
             if (storedAxes) {
@@ -124,18 +121,7 @@ const Storage = {
 // 3. COLUMN SETTINGS
 // =========================================================================
 
-function getColumnElements(colNum) {
-    return {
-        p: document.querySelector('#p-t' + colNum),
-        fontSize: document.querySelector('#inp-f-size-' + colNum),
-        tracking: document.querySelector('#inp-f-tracking-' + colNum),
-        lineHeight: document.querySelector('#inp-f-lineHeight-' + colNum),
-        features: document.querySelector('#f-features-' + colNum),
-        locl: document.querySelector('#f-locl-' + colNum)
-    };
-}
-
-// --- Variable font axes (dynamic) ---
+// --- Variable font axes (per-column, dynamic) ---
 
 function updateColumnAxes(colNum, axes) {
     columnAxes[colNum] = axes;
@@ -160,7 +146,6 @@ function updateColumnAxes(colNum, axes) {
         input.dataset.min = axis.minValue;
         input.dataset.max = axis.maxValue;
 
-        // Restore from storage or use font default
         input.value = Storage.get(
             axis.tag + '-' + colNum,
             String(axis.defaultValue)
@@ -170,12 +155,10 @@ function updateColumnAxes(colNum, axes) {
         li.appendChild(input);
         ul.appendChild(li);
 
-        // Numeric filtering for dynamically created inputs
         input.addEventListener('input', function () {
             this.value = this.value.replace(/[^\d.-]/g, '');
         });
 
-        // Live update on change
         input.addEventListener('change', () => applyVariationSettings(colNum));
         input.addEventListener('input', () => applyVariationSettings(colNum));
     });
@@ -207,69 +190,67 @@ function applyVariationSettings(colNum) {
     p.style.fontVariationSettings = parts.join(', ');
 }
 
-// --- Typography settings (non-axis) ---
+// --- Universal typography settings (apply to all columns) ---
 
-function applyColumnSettings(colNum) {
-    const el = getColumnElements(colNum);
-    if (!el.p) return;
-
-    const size = el.fontSize.value || DEFAULTS.fontSize;
-    el.p.style.fontSize = size + 'pt';
-    Storage.set('inp-f-size-' + colNum, size);
-
-    const tracking = el.tracking.value || DEFAULTS.tracking;
-    el.p.style.letterSpacing = (tracking * TRACKING_MULTIPLIER) + 'em';
-    Storage.set('inp-f-tracking-' + colNum, tracking);
-
-    const lh = el.lineHeight.value || DEFAULTS.lineHeight;
-    el.p.style.lineHeight = lh;
-    Storage.set('inp-f-lineHeight-' + colNum, lh);
-
-    const features = el.features.value;
-    el.p.style.fontFeatureSettings = features || 'normal';
-    Storage.set('f-features-' + colNum, features);
-
-    const locl = el.locl.value;
-    el.p.lang = locl;
-    Storage.set('f-locl-' + colNum, locl);
-
+function getGlobalInputs() {
+    return {
+        fontSize: document.querySelector('#inp-f-size'),
+        tracking: document.querySelector('#inp-f-tracking'),
+        lineHeight: document.querySelector('#inp-f-lineHeight'),
+        features: document.querySelector('#f-features'),
+        locl: document.querySelector('#f-locl')
+    };
 }
 
-function initColumnSettings(colNum) {
-    const el = getColumnElements(colNum);
-    if (!el.p) return;
+function applyGlobalSettings() {
+    const g = getGlobalInputs();
 
-    el.fontSize.value = Storage.get('inp-f-size-' + colNum, DEFAULTS.fontSize);
-    el.tracking.value = Storage.get('inp-f-tracking-' + colNum, DEFAULTS.tracking);
-    el.lineHeight.value = Storage.get('inp-f-lineHeight-' + colNum, DEFAULTS.lineHeight);
-    el.features.value = Storage.get('f-features-' + colNum, DEFAULTS.features);
-    el.locl.value = Storage.get('f-locl-' + colNum, DEFAULTS.locl);
+    const size = g.fontSize.value || DEFAULTS.fontSize;
+    const tracking = g.tracking.value || DEFAULTS.tracking;
+    const lh = g.lineHeight.value || DEFAULTS.lineHeight;
+    const features = g.features.value;
+    const locl = g.locl.value;
 
-    const size = el.fontSize.value || DEFAULTS.fontSize;
-    el.p.style.fontSize = size + 'pt';
+    Storage.set('inp-f-size', size);
+    Storage.set('inp-f-tracking', tracking);
+    Storage.set('inp-f-lineHeight', lh);
+    Storage.set('f-features', features);
+    Storage.set('f-locl', locl);
 
-    const tracking = el.tracking.value || DEFAULTS.tracking;
-    el.p.style.letterSpacing = (tracking * TRACKING_MULTIPLIER) + 'em';
+    COLUMN_IDS.forEach(colNum => {
+        const p = document.querySelector('#p-t' + colNum);
+        if (!p) return;
 
-    const lh = el.lineHeight.value || DEFAULTS.lineHeight;
-    el.p.style.lineHeight = lh;
+        p.style.fontSize = size + 'pt';
+        p.style.letterSpacing = (tracking * TRACKING_MULTIPLIER) + 'em';
+        p.style.lineHeight = lh;
+        p.style.fontFeatureSettings = features || 'normal';
+        p.lang = locl;
+    });
+}
 
-    const features = el.features.value;
-    if (features) el.p.style.fontFeatureSettings = features;
+function initGlobalSettings() {
+    const g = getGlobalInputs();
 
-    const locl = el.locl.value;
-    if (locl) el.p.lang = locl;
+    g.fontSize.value = Storage.get('inp-f-size', DEFAULTS.fontSize);
+    g.tracking.value = Storage.get('inp-f-tracking', DEFAULTS.tracking);
+    g.lineHeight.value = Storage.get('inp-f-lineHeight', DEFAULTS.lineHeight);
+    g.features.value = Storage.get('f-features', DEFAULTS.features);
+    g.locl.value = Storage.get('f-locl', DEFAULTS.locl);
 
-    // Attach change listeners to typography settings
-    const inputs = [el.fontSize, el.tracking, el.lineHeight, el.features, el.locl];
-    inputs.forEach(input => {
+    // Apply on load
+    applyGlobalSettings();
+
+    // Listen for changes
+    [g.fontSize, g.tracking, g.lineHeight, g.features, g.locl].forEach(input => {
         if (input) {
-            input.addEventListener('change', () => applyColumnSettings(colNum));
-            input.addEventListener('input', () => applyColumnSettings(colNum));
+            input.addEventListener('change', applyGlobalSettings);
+            input.addEventListener('input', applyGlobalSettings);
         }
     });
+}
 
-    // Restore axes from localStorage if previously saved
+function initColumnAxes(colNum) {
     const storedAxes = Storage.get('axes_' + colNum);
     if (storedAxes) {
         try {
@@ -751,7 +732,8 @@ function initHelloPopup() {
 function init() {
     initColumnVisibility();
     initFontLoading();
-    COLUMN_IDS.forEach(initColumnSettings);
+    initGlobalSettings();
+    COLUMN_IDS.forEach(initColumnAxes);
     loadTextFromStorage();
     initTextSync();
     initPasteHandlers();
