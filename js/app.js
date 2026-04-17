@@ -584,6 +584,26 @@ function initTextSelect() {
         select.appendChild(option);
     });
 
+    // Remote sample texts are written into texts/<category>/*.txt at deploy time
+    // and indexed in texts/index.json. Append them as <optgroup> sections.
+    fetch('texts/index.json')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (manifest) {
+            if (!Array.isArray(manifest)) return;
+            manifest.forEach(function (cat) {
+                var group = document.createElement('optgroup');
+                group.label = cat.category;
+                cat.files.forEach(function (fname) {
+                    var option = document.createElement('option');
+                    option.value = 'texts/' + encodeURIComponent(cat.category) + '/' + encodeURIComponent(fname);
+                    option.textContent = fname.replace(/\.txt$/i, '');
+                    group.appendChild(option);
+                });
+                select.appendChild(group);
+            });
+        })
+        .catch(function () { /* no manifest locally; built-ins only */ });
+
     select.addEventListener('change', function () {
         if (!this.value) return;
         fetch(this.value)
