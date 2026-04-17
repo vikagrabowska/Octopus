@@ -201,16 +201,20 @@
                     <input id="resetStorage" type="button" value="Clear data">
                 </div>
 
-                <!-- Universal typography settings -->
+                <!-- Master typography row: edit, then click the push button to apply to all columns -->
                 <div id="gcp-global" class="grid-col-prop" style="grid-column: 1 / -1;">
+                    <div class="gcp-global-head">
+                        <h3>All columns</h3>
+                        <span class="gcp-global-hint">Click <span class="push-glyph">↓</span> to apply a value to every column</span>
+                    </div>
                     <ul>
-                        <li><label>Font size</label><input id="inp-f-size" class="grid-inp-col-f-settings" type="text"></li>
-                        <li><label>Tracking</label><input id="inp-f-tracking" class="grid-inp-col-f-settings" type="text"></li>
-                        <li><label>Line Height</label><input id="inp-f-lineHeight" class="grid-inp-col-f-settings" type="text"></li>
+                        <li><label>Font size</label><input id="inp-f-size" class="grid-inp-col-f-settings" type="text"><button type="button" class="push-all" data-field="fontSize" title="Apply to all columns">↓</button></li>
+                        <li><label>Tracking</label><input id="inp-f-tracking" class="grid-inp-col-f-settings" type="text"><button type="button" class="push-all" data-field="tracking" title="Apply to all columns">↓</button></li>
+                        <li><label>Line Height</label><input id="inp-f-lineHeight" class="grid-inp-col-f-settings" type="text"><button type="button" class="push-all" data-field="lineHeight" title="Apply to all columns">↓</button></li>
                         <li><label>.locl <a class="info-pict" href="https://www.w3schools.com/tags/ref_country_codes.asp" target="_blank"></a></label>
-                            <input type="text" id="f-locl" class="grid-inp-col-f-settings" placeholder="ISO code"></li>
+                            <input type="text" id="f-locl" class="grid-inp-col-f-settings" placeholder="ISO code"><button type="button" class="push-all" data-field="locl" title="Apply to all columns">↓</button></li>
                         <li class="OT-features"><label>Features</label>
-                            <input type="text" id="f-features" class="grid-inp-col-f-features" placeholder='e.g. "ss01", "calt"'></li>
+                            <input type="text" id="f-features" class="grid-inp-col-f-features" placeholder='e.g. "ss01", "calt"'><button type="button" class="push-all" data-field="features" title="Apply to all columns">↓</button></li>
                     </ul>
                 </div>
 

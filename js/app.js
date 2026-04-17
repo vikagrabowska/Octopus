@@ -23,6 +23,18 @@ const DEFAULTS = {
     locl: ''
 };
 
+// Typography fields. Each entry drives: the global input IDs, per-column
+// input IDs, storage keys, and how the value is applied to the <p> element.
+const TYPO_FIELDS = [
+    { key: 'fontSize',   globalId: 'inp-f-size',       label: 'Font size',  placeholder: '',          apply: (p, v) => p.style.fontSize = (v || DEFAULTS.fontSize) + 'pt' },
+    { key: 'tracking',   globalId: 'inp-f-tracking',   label: 'Tracking',   placeholder: '',          apply: (p, v) => p.style.letterSpacing = ((v || DEFAULTS.tracking) * TRACKING_MULTIPLIER) + 'em' },
+    { key: 'lineHeight', globalId: 'inp-f-lineHeight', label: 'Line Height', placeholder: '',         apply: (p, v) => p.style.lineHeight = v || DEFAULTS.lineHeight },
+    { key: 'locl',       globalId: 'f-locl',           label: '.locl',      placeholder: 'ISO code',  apply: (p, v) => p.lang = v || '' },
+    { key: 'features',   globalId: 'f-features',       label: 'Features',   placeholder: 'e.g. "ss01"', apply: (p, v) => p.style.fontFeatureSettings = v || 'normal' }
+];
+
+const typoKey = (field, colNum) => field.globalId + '_' + colNum;
+
 // Per-column axes detected from loaded fonts
 // { colNum: [ { tag, minValue, maxValue, defaultValue }, ... ] }
 const columnAxes = {};
@@ -97,10 +109,11 @@ const Storage = {
     },
 
     clearAll() {
-        const keys = [TEXT_STORAGE_KEY, 'HW_all', 'row-top', 'row-bot',
-            'inp-f-size', 'inp-f-tracking', 'inp-f-lineHeight', 'f-features', 'f-locl'];
+        const keys = [TEXT_STORAGE_KEY, 'HW_all', 'row-top', 'row-bot'];
+        TYPO_FIELDS.forEach(f => keys.push(f.globalId));
         COLUMN_IDS.forEach(n => {
             keys.push('font_name_' + n, 'axes_' + n);
+            TYPO_FIELDS.forEach(f => keys.push(typoKey(f, n)));
             // Also clear any stored axis values
             const storedAxes = localStorage.getItem('axes_' + n);
             if (storedAxes) {
@@ -190,63 +203,100 @@ function applyVariationSettings(colNum) {
     p.style.fontVariationSettings = parts.join(', ');
 }
 
-// --- Universal typography settings (apply to all columns) ---
+// --- Typography settings (per-column, with push-to-all from global row) ---
 
-function getGlobalInputs() {
-    return {
-        fontSize: document.querySelector('#inp-f-size'),
-        tracking: document.querySelector('#inp-f-tracking'),
-        lineHeight: document.querySelector('#inp-f-lineHeight'),
-        features: document.querySelector('#f-features'),
-        locl: document.querySelector('#f-locl')
-    };
+function perColumnInputId(field, colNum) {
+    return field.globalId + '-' + colNum;
 }
 
-function applyGlobalSettings() {
-    const g = getGlobalInputs();
+function renderColumnTypoFields(colNum) {
+    const ul = document.querySelector('#gcp-' + colNum + ' ul');
+    if (!ul) return;
 
-    const size = g.fontSize.value || DEFAULTS.fontSize;
-    const tracking = g.tracking.value || DEFAULTS.tracking;
-    const lh = g.lineHeight.value || DEFAULTS.lineHeight;
-    const features = g.features.value;
-    const locl = g.locl.value;
+    TYPO_FIELDS.forEach(field => {
+        const li = document.createElement('li');
+        if (field.key === 'features') li.className = 'OT-features';
 
-    Storage.set('inp-f-size', size);
-    Storage.set('inp-f-tracking', tracking);
-    Storage.set('inp-f-lineHeight', lh);
-    Storage.set('f-features', features);
-    Storage.set('f-locl', locl);
+        const label = document.createElement('label');
+        label.textContent = field.label;
 
-    COLUMN_IDS.forEach(colNum => {
-        const p = document.querySelector('#p-t' + colNum);
-        if (!p) return;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = perColumnInputId(field, colNum);
+        input.className = field.key === 'features'
+            ? 'grid-inp-col-f-features'
+            : 'grid-inp-col-f-settings';
+        if (field.placeholder) input.placeholder = field.placeholder;
 
-        p.style.fontSize = size + 'pt';
-        p.style.letterSpacing = (tracking * TRACKING_MULTIPLIER) + 'em';
-        p.style.lineHeight = lh;
-        p.style.fontFeatureSettings = features || 'normal';
-        p.lang = locl;
+        // Restore stored value; fall back to any legacy global value so existing
+        // users don't see their settings reset on upgrade.
+        const stored = Storage.get(typoKey(field, colNum), null);
+        const legacy = Storage.get(field.globalId, DEFAULTS[field.key]);
+        input.value = stored !== null ? stored : legacy;
+
+        li.appendChild(label);
+        li.appendChild(input);
+        ul.appendChild(li);
     });
 }
 
-function initGlobalSettings() {
-    const g = getGlobalInputs();
+function applyColumnTypography(colNum) {
+    const p = document.querySelector('#p-t' + colNum);
+    if (!p) return;
+    TYPO_FIELDS.forEach(field => {
+        const input = document.querySelector('#' + perColumnInputId(field, colNum));
+        if (!input) return;
+        const val = input.value;
+        Storage.set(typoKey(field, colNum), val);
+        field.apply(p, val);
+    });
+}
 
-    g.fontSize.value = Storage.get('inp-f-size', DEFAULTS.fontSize);
-    g.tracking.value = Storage.get('inp-f-tracking', DEFAULTS.tracking);
-    g.lineHeight.value = Storage.get('inp-f-lineHeight', DEFAULTS.lineHeight);
-    g.features.value = Storage.get('f-features', DEFAULTS.features);
-    g.locl.value = Storage.get('f-locl', DEFAULTS.locl);
+function pushFieldToAll(field) {
+    const globalInput = document.querySelector('#' + field.globalId);
+    if (!globalInput) return;
+    const val = globalInput.value;
+    Storage.set(field.globalId, val);
 
-    // Apply on load
-    applyGlobalSettings();
+    COLUMN_IDS.forEach(colNum => {
+        const input = document.querySelector('#' + perColumnInputId(field, colNum));
+        if (!input) return;
+        input.value = val;
+        Storage.set(typoKey(field, colNum), val);
+    });
+    COLUMN_IDS.forEach(applyColumnTypography);
+}
 
-    // Listen for changes
-    [g.fontSize, g.tracking, g.lineHeight, g.features, g.locl].forEach(input => {
-        if (input) {
-            input.addEventListener('change', applyGlobalSettings);
-            input.addEventListener('input', applyGlobalSettings);
+function initTypographySettings() {
+    // Populate each column card with its own 5 inputs
+    COLUMN_IDS.forEach(renderColumnTypoFields);
+
+    // Seed the global row from the most recently stored global values
+    TYPO_FIELDS.forEach(field => {
+        const globalInput = document.querySelector('#' + field.globalId);
+        if (globalInput) {
+            globalInput.value = Storage.get(field.globalId, DEFAULTS[field.key]);
         }
+    });
+
+    // Per-column inputs: live-apply on change
+    COLUMN_IDS.forEach(colNum => {
+        TYPO_FIELDS.forEach(field => {
+            const input = document.querySelector('#' + perColumnInputId(field, colNum));
+            if (!input) return;
+            const apply = () => applyColumnTypography(colNum);
+            input.addEventListener('change', apply);
+            input.addEventListener('input', apply);
+        });
+        applyColumnTypography(colNum);
+    });
+
+    // Push-to-all buttons broadcast the adjacent global input's value
+    document.querySelectorAll('#gcp-global .push-all').forEach(btn => {
+        const fieldKey = btn.dataset.field;
+        const field = TYPO_FIELDS.find(f => f.key === fieldKey);
+        if (!field) return;
+        btn.addEventListener('click', () => pushFieldToAll(field));
     });
 }
 
@@ -745,7 +795,7 @@ function initClearData() {
 function init() {
     initColumnVisibility();
     initFontLoading();
-    initGlobalSettings();
+    initTypographySettings();
     COLUMN_IDS.forEach(initColumnAxes);
     loadTextFromStorage();
     initTextSync();
