@@ -579,7 +579,9 @@ function initTextSelect() {
                 cat.files.forEach(function (fname) {
                     var option = document.createElement('option');
                     option.value = 'texts/' + encodeURIComponent(cat.category) + '/' + encodeURIComponent(fname);
-                    option.textContent = fname.replace(/\.txt$/i, '');
+                    var label = fname.replace(/\.txt$/i, '');
+                    option.title = label;
+                    option.textContent = label.length > 32 ? label.slice(0, 31) + '…' : label;
                     group.appendChild(option);
                 });
                 select.appendChild(group);
