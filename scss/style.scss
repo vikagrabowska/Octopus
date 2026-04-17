@@ -96,6 +96,7 @@ nav {
         display: grid;
         column-gap: 10px;
         grid-column: 1;
+        grid-auto-columns: 1fr;
 
         .col {
             display: grid;
