@@ -682,7 +682,7 @@ function initSettingsPanel() {
     const panel = document.querySelector('#features-settings');
     if (!panel) return;
 
-    const openBtn = document.querySelector('#open-features');
+    const openBtn = document.querySelector('.open-features');
     if (openBtn) {
         openBtn.addEventListener('click', function () {
             panel.style.display = 'flex';
