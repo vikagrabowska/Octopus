@@ -1,0 +1,56 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch sample texts from SorkinType/octo-text
+        run: |
+          git clone --depth 1 https://github.com/SorkinType/octo-text.git /tmp/octo-text
+          cp -R /tmp/octo-text/Output/. texts/
+          python3 - <<'PY'
+          import json, os
+          texts_dir = 'texts'
+          manifest = []
+          for name in sorted(os.listdir(texts_dir)):
+              path = os.path.join(texts_dir, name)
+              if not os.path.isdir(path):
+                  continue
+              files = sorted(f for f in os.listdir(path) if f.endswith('.txt'))
+              if files:
+                  manifest.append({'category': name, 'files': files})
+          with open(os.path.join(texts_dir, 'index.json'), 'w') as f:
+              json.dump(manifest, f, indent=2)
+          PY
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
